@@ -5,15 +5,14 @@ class WeatherView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Center(
         child: Column(
           children: [
             const Spacer(),
-            SizedBox(
-              width: screenSize.width / 2,
+            FractionallySizedBox(
+              widthFactor: 0.5,
               child: Column(
                 children: [
                   const AspectRatio(
@@ -60,8 +59,8 @@ class WeatherView extends StatelessWidget {
                   const SizedBox(
                     height: 80,
                   ),
-                  SizedBox(
-                    width: screenSize.width / 2,
+                  FractionallySizedBox(
+                    widthFactor: 0.5,
                     child: Row(
                       children: [
                         Expanded(
