@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_training/view/weather_view.dart';
+import 'package:go_router/go_router.dart';
 
 class LaunchView extends StatefulWidget {
   const LaunchView({super.key});
@@ -16,11 +16,7 @@ class _LaunchViewState extends State<LaunchView> {
 
     WidgetsBinding.instance.endOfFrame.then((_) {
       Future.delayed(const Duration(milliseconds: 500), () {
-        Navigator.of(context).push(
-          MaterialPageRoute<WeatherView>(
-            builder: (context) => const WeatherView(),
-          ),
-        );
+        context.go('/weather_page');
       });
     });
   }
