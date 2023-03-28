@@ -10,14 +10,20 @@ class LaunchView extends StatefulWidget {
 }
 
 class _LaunchViewState extends State<LaunchView> {
+  void _toWeatherView() {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      context.push('/weather_page').then((_) {
+        _toWeatherView();
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.endOfFrame.then((_) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        context.go('/weather_page');
-      });
+      _toWeatherView();
     });
   }
 
