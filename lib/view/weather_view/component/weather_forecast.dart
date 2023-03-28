@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WeatherForecast extends StatelessWidget {
-  const WeatherForecast({super.key});
+  const WeatherForecast({super.key, this.weatherCondition});
+
+  final String? weatherCondition;
 
   @override
   Widget build(BuildContext context) {
@@ -9,9 +12,14 @@ class WeatherForecast extends StatelessWidget {
 
     return Column(
       children: [
-        const AspectRatio(
+        AspectRatio(
           aspectRatio: 1,
-          child: Placeholder(),
+          child: weatherCondition == null
+              ? const Placeholder()
+              : SvgPicture.asset(
+                  'images/$weatherCondition.svg',
+                  semanticsLabel: '$weatherCondition image',
+                ),
         ),
         Padding(
           padding: const EdgeInsets.all(16),
