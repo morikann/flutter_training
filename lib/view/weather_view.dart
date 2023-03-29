@@ -5,6 +5,9 @@ class WeatherView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final largeLabel = textTheme.labelLarge;
 
     return Scaffold(
       body: Center(
@@ -27,24 +30,18 @@ class WeatherView extends StatelessWidget {
                           child: Text(
                             '** ℃',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Colors.blue,
-                                ),
+                            style: largeLabel?.copyWith(
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             '** ℃',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Colors.red,
-                                ),
+                            style: largeLabel?.copyWith(
+                              color: Colors.red,
+                            ),
                           ),
                         ),
                       ],
