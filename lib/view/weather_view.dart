@@ -22,31 +22,30 @@ class WeatherView extends StatelessWidget {
                     aspectRatio: 1,
                     child: Placeholder(),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            '** ℃',
-                            textAlign: TextAlign.center,
-                            style: largeLabel?.copyWith(
-                              color: Colors.blue,
-                            ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '** ℃',
+                          textAlign: TextAlign.center,
+                          style: largeLabel?.copyWith(
+                            color: Colors.blue,
                           ),
                         ),
-                        Expanded(
-                          child: Text(
-                            '** ℃',
-                            textAlign: TextAlign.center,
-                            style: largeLabel?.copyWith(
-                              color: Colors.red,
-                            ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          '** ℃',
+                          textAlign: TextAlign.center,
+                          style: largeLabel?.copyWith(
+                            color: Colors.red,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 16),
                 ],
               ),
               Expanded(
