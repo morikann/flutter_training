@@ -11,12 +11,12 @@ class WeatherView extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            const Spacer(),
-            FractionallySizedBox(
-              widthFactor: 0.5,
-              child: Column(
+        child: FractionallySizedBox(
+          widthFactor: 0.5,
+          child: Column(
+            children: [
+              const Spacer(),
+              Column(
                 children: [
                   const AspectRatio(
                     aspectRatio: 1,
@@ -49,16 +49,13 @@ class WeatherView extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
-                  FractionallySizedBox(
-                    widthFactor: 0.5,
-                    child: Row(
+              Expanded(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 80,
+                    ),
+                    Row(
                       children: [
                         Expanded(
                           child: TextButton(
@@ -74,11 +71,11 @@ class WeatherView extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
