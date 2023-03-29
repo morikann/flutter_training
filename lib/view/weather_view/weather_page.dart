@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_training/view/component/app_button.dart';
-import 'package:flutter_training/view/weather_view/weather_panel.dart';
-import 'package:flutter_training/view/weather_view/weather_temperature.dart';
+import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
 
-class WeatherView extends StatelessWidget {
-  const WeatherView({super.key});
+class WeatherPage extends StatelessWidget {
+  const WeatherPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +13,7 @@ class WeatherView extends StatelessWidget {
           child: Column(
             children: [
               const Spacer(),
-              Column(
-                children: const [
-                  WeatherPanel(),
-                  WeatherTemperature(),
-                ],
-              ),
+              const WeatherForecast(),
               Flexible(
                 child: Column(
                   children: [
@@ -30,14 +23,14 @@ class WeatherView extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: AppButton(
-                            title: 'Close',
+                          child: TextButton(
+                            child: const Text('Close'),
                             onPressed: () {},
                           ),
                         ),
                         Expanded(
-                          child: AppButton(
-                            title: 'Reload',
+                          child: TextButton(
+                            child: const Text('Reload'),
                             onPressed: () {},
                           ),
                         ),
