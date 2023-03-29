@@ -48,7 +48,7 @@ class WeatherView extends StatelessWidget {
                   const SizedBox(height: 16),
                 ],
               ),
-              Expanded(
+              Flexible(
                 child: Column(
                   children: [
                     const SizedBox(
