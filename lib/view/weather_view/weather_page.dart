@@ -12,7 +12,7 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  String? _weatherCondition;
+  WeatherCondition? _weatherCondition;
 
   @override
   Widget build(BuildContext context) {
