@@ -5,14 +5,12 @@ import 'package:go_router/go_router.dart';
 final router = GoRouter(
   routes: [
     GoRoute(
-      path: '/',
+      path: LaunchView.path,
       builder: (context, state) => const LaunchView(),
-      routes: [
-        GoRoute(
-          path: 'weather_page',
-          builder: (context, state) => const WeatherPage(),
-        )
-      ],
     ),
+    GoRoute(
+      path: WeatherPage.path,
+      builder: (context, state) => const WeatherPage(),
+    )
   ],
 );

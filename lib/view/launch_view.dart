@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_training/view/weather_view/weather_page.dart';
 import 'package:go_router/go_router.dart';
 
 class LaunchView extends StatefulWidget {
   const LaunchView({super.key});
+
+  static const path = '/';
 
   @override
   State<LaunchView> createState() => _LaunchViewState();
@@ -12,7 +15,7 @@ class LaunchView extends StatefulWidget {
 class _LaunchViewState extends State<LaunchView> {
   void _toWeatherView() {
     Future.delayed(const Duration(milliseconds: 500), () {
-      context.push('/weather_page').then((_) {
+      context.push(WeatherPage.path).then((_) {
         _toWeatherView();
       });
     });

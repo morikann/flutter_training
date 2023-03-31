@@ -4,8 +4,11 @@ import 'package:flutter_training/view/weather_view/component/weather_forecast.da
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 final _weather = Weather(YumemiWeather());
+
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
+
+  static const path = '/weather_page';
 
   @override
   State<WeatherPage> createState() => _WeatherPageState();
