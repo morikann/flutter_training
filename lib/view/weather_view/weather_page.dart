@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/model/weather.dart';
 import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
+import 'package:yumemi_weather/yumemi_weather.dart';
 
+final _weather = Weather(YumemiWeather());
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
 
@@ -10,7 +12,6 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  final _weather = Weather();
   String? _weatherCondition;
 
   @override

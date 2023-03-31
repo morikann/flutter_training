@@ -1,7 +1,11 @@
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class Weather {
-  String fetchWeather() {
-    return YumemiWeather().fetchSimpleWeather();
+  const Weather(this._weatherClient);
+
+  final YumemiWeather _weatherClient;
+
+  String? fetchWeather() {
+    return _weatherClient.fetchSimpleWeather();
   }
 }
