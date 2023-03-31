@@ -6,9 +6,14 @@ import 'package:go_router/go_router.dart';
 mixin AfterDisplayLayoutMixin<T extends StatefulWidget> on State<T> {
   void transitScreen() {}
 
-  void afterDisplayLayout() {
+  @override
+  void initState() {
+    super.initState();
+
     WidgetsBinding.instance.endOfFrame.then((_) {
-      transitScreen();
+      if (mounted) {
+        transitScreen();
+      }
     });
   }
 }
@@ -37,13 +42,6 @@ class _LaunchViewState extends State<LaunchView> with AfterDisplayLayoutMixin {
     super.transitScreen();
 
     _toWeatherView();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    afterDisplayLayout();
   }
 
   @override
