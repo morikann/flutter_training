@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/model/weather.dart';
 import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 final _weather = Weather(YumemiWeather());
@@ -37,8 +38,8 @@ class _WeatherPageState extends State<WeatherPage> {
                       children: [
                         Expanded(
                           child: TextButton(
+                            onPressed: context.pop,
                             child: const Text('Close'),
-                            onPressed: () {},
                           ),
                         ),
                         Expanded(
