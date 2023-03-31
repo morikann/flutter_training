@@ -13,12 +13,13 @@ class LaunchView extends StatefulWidget {
 }
 
 class _LaunchViewState extends State<LaunchView> {
-  void _toWeatherView() {
-    Future.delayed(const Duration(milliseconds: 500), () {
-      context.push(WeatherPage.path).then((_) {
-        _toWeatherView();
-      });
-    });
+  Future<void> _toWeatherView() async {
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+    if (!mounted) {
+      return;
+    }
+    await context.push(WeatherPage.path);
+    await _toWeatherView();
   }
 
   @override
