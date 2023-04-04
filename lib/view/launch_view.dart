@@ -4,7 +4,7 @@ import 'package:flutter_training/view/weather_view/weather_page.dart';
 import 'package:go_router/go_router.dart';
 
 mixin AfterDisplayLayoutMixin<T extends StatefulWidget> on State<T> {
-  void afterDisplayLayout() {}
+  void afterDisplayLayout();
 
   @override
   void initState() {
@@ -39,7 +39,6 @@ class _LaunchViewState extends State<LaunchView> with AfterDisplayLayoutMixin {
 
   @override
   void afterDisplayLayout() {
-    
     _toWeatherView();
   }
 
