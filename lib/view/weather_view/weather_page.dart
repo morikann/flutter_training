@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/model/weather.dart';
+import 'package:flutter_training/view/weather_view/component/error_dialog.dart';
 import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
@@ -46,9 +47,24 @@ class _WeatherPageState extends State<WeatherPage> {
                           child: TextButton(
                             child: const Text('Reload'),
                             onPressed: () {
-                              setState(() {
-                                _weatherCondition = _weather.fetchWeather();
-                              });
+                              _weather.fetchWeather().when(
+                                success: (condition) {
+                                  setState(() {
+                                    _weatherCondition = condition;
+                                  });
+                                },
+                                failure: (error) {
+                                  showDialog<void>(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      return ErrorDialog(
+                                        errorDescription: error,
+                                      );
+                                    },
+                                  );
+                                },
+                              );
                             },
                           ),
                         ),
