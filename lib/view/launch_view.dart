@@ -11,9 +11,7 @@ mixin AfterDisplayLayoutMixin<T extends StatefulWidget> on State<T> {
     super.initState();
 
     WidgetsBinding.instance.endOfFrame.then((_) {
-      if (mounted) {
         afterDisplayLayout();
-      }
     });
   }
 }
