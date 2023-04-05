@@ -19,6 +19,31 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage> {
   WeatherCondition? _weatherCondition;
 
+  void _fetchWeather() {
+    _weather.fetchWeather().when(
+      success: (condition) {
+        setState(() {
+          _weatherCondition = condition;
+        });
+      },
+      failure: (error) {
+        _showErrorDialog(error);
+      },
+    );
+  }
+
+  void _showErrorDialog(String error) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return ErrorDialog(
+          errorDescription: error,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,27 +70,8 @@ class _WeatherPageState extends State<WeatherPage> {
                         ),
                         Expanded(
                           child: TextButton(
+                            onPressed: _fetchWeather,
                             child: const Text('Reload'),
-                            onPressed: () {
-                              _weather.fetchWeather().when(
-                                success: (condition) {
-                                  setState(() {
-                                    _weatherCondition = condition;
-                                  });
-                                },
-                                failure: (error) {
-                                  showDialog<void>(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (context) {
-                                      return ErrorDialog(
-                                        errorDescription: error,
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            },
                           ),
                         ),
                       ],
