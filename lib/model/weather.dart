@@ -8,6 +8,17 @@ enum WeatherCondition {
   rainy,
 }
 
+extension _WeatherConditionExt on Iterable<WeatherCondition> {
+  WeatherCondition byName(String name) {
+    for (final element in this) {
+      if (element.name == name) {
+        return element;
+      }
+    }
+    throw Exception('$nameがWeatherConditionに含まれていませんでした。');
+  }
+}
+
 class Weather {
   const Weather(this._weatherClient);
 
