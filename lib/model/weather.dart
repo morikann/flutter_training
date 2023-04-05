@@ -9,13 +9,13 @@ enum WeatherCondition {
 }
 
 extension _WeatherConditionExt on Iterable<WeatherCondition> {
-  WeatherCondition byName(String name) {
+  WeatherCondition? byNameOrNull(String name) {
     for (final element in this) {
       if (element.name == name) {
         return element;
       }
     }
-    throw Exception('$nameがWeatherConditionに含まれていませんでした。');
+    return null;
   }
 }
 
@@ -24,10 +24,10 @@ class Weather {
 
   final YumemiWeather _weatherClient;
 
-  Result<WeatherCondition, String> fetchWeather() {
+  Result<WeatherCondition?, String> fetchWeather() {
     try {
       final condition = _weatherClient.fetchThrowsWeather('Tokyo');
-      final weatherCondition = WeatherCondition.values.byName(condition);
+      final weatherCondition = WeatherCondition.values.byNameOrNull(condition);
       return Result.success(weatherCondition);
     } on Exception catch (e) {
       debugPrint('$e');
