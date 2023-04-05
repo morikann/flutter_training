@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.4
+  freezed_annotation: ^2.2.0
   go_router: ^6.5.0
   yumemi_weather:
     git:
@@ -21,8 +22,10 @@ dependencies:
 
 dev_dependencies:
   blendthink_lints: ^3.0.0
+  build_runner: ^2.3.3
   flutter_test:
     sdk: flutter
+  freezed: ^2.3.2
 
 flutter:
 

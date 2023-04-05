@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_training/common/result.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 enum WeatherCondition {
@@ -7,18 +8,40 @@ enum WeatherCondition {
   rainy,
 }
 
+extension _WeatherConditionExt on Iterable<WeatherCondition> {
+  WeatherCondition? byNameOrNull(String name) {
+    for (final element in this) {
+      if (element.name == name) {
+        return element;
+      }
+    }
+    return null;
+  }
+}
+
 class Weather {
   const Weather(this._weatherClient);
 
   final YumemiWeather _weatherClient;
 
-  WeatherCondition? fetchWeather() {
+  Result<WeatherCondition?, String> fetchWeather() {
     try {
-      final condition = _weatherClient.fetchSimpleWeather();
-      return WeatherCondition.values.byName(condition);
+      final condition = _weatherClient.fetchThrowsWeather('Tokyo');
+      final weatherCondition = WeatherCondition.values.byNameOrNull(condition);
+      if (weatherCondition == null) {
+        return const Result.failure('不明な天気予報です。');
+      }
+      return Result.success(weatherCondition);
     } on Exception catch (e) {
       debugPrint('$e');
-      return null;
+      return const Result.failure('例外が発生しました。');
+    } on YumemiWeatherError catch (e) {
+      switch (e) {
+        case YumemiWeatherError.invalidParameter:
+          return const Result.failure('パラメータが間違っています。');
+        case YumemiWeatherError.unknown:
+          return const Result.failure('予期せぬ不具合が発生しました。');
+      }
     }
   }
 }

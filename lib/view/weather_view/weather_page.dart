@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/model/weather.dart';
+import 'package:flutter_training/view/weather_view/component/error_dialog.dart';
 import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
@@ -17,6 +18,31 @@ class WeatherPage extends StatefulWidget {
 
 class _WeatherPageState extends State<WeatherPage> {
   WeatherCondition? _weatherCondition;
+
+  void _fetchWeather() {
+    _weather.fetchWeather().when(
+      success: (condition) {
+        setState(() {
+          _weatherCondition = condition;
+        });
+      },
+      failure: (error) {
+        _showErrorDialog(error);
+      },
+    );
+  }
+
+  void _showErrorDialog(String error) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return ErrorDialog(
+          errorDescription: error,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +70,8 @@ class _WeatherPageState extends State<WeatherPage> {
                         ),
                         Expanded(
                           child: TextButton(
+                            onPressed: _fetchWeather,
                             child: const Text('Reload'),
-                            onPressed: () {
-                              setState(() {
-                                _weatherCondition = _weather.fetchWeather();
-                              });
-                            },
                           ),
                         ),
                       ],
