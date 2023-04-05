@@ -28,6 +28,9 @@ class Weather {
     try {
       final condition = _weatherClient.fetchThrowsWeather('Tokyo');
       final weatherCondition = WeatherCondition.values.byNameOrNull(condition);
+      if (weatherCondition == null) {
+        return const Result.failure('不明な天気予報です。');
+      }
       return Result.success(weatherCondition);
     } on Exception catch (e) {
       debugPrint('$e');
