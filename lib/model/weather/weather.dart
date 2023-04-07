@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_training/common/result.dart';
 import 'package:flutter_training/model/weather/weather_info.dart';
-import 'package:flutter_training/model/weather/weather_request.dart';
+import 'package:flutter_training/model/weather/weather_query.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class Weather {
@@ -10,9 +10,9 @@ class Weather {
 
   final YumemiWeather _weatherClient;
 
-  Result<WeatherInfo, String> fetchWeather(WeatherRequest request) {
+  Result<WeatherInfo, String> fetchWeather(WeatherQuery query) {
     try {
-      final json = jsonEncode(request);
+      final json = jsonEncode(query);
       final weatherJsonData = _weatherClient.fetchWeather(json);
       final weatherData = jsonDecode(weatherJsonData) as Map<String, dynamic>;
       final weatherInfo = WeatherInfo.fromJson(weatherData);

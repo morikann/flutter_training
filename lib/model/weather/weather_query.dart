@@ -1,5 +1,5 @@
-class WeatherRequest {
-  WeatherRequest({
+class WeatherQuery {
+  WeatherQuery({
     required this.area,
     required this.date,
   });
