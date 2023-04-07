@@ -15,7 +15,7 @@ class WeatherInfo {
     final weatherCondition = WeatherCondition.values
         .byNameOrNull(json['weather_condition'].toString());
     if (weatherCondition == null) {
-      throw const FormatException('weather_condition の値が適切ではありません。');
+      throwFormatException('weather_condition の値が適切ではありません。');
     }
 
     final maxTemperature = int.tryParse(json['max_temperature'].toString());
