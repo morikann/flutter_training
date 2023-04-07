@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_training/model/weather.dart';
+import 'package:flutter_training/model/weather/weather_info.dart';
 
 class WeatherForecast extends StatelessWidget {
-  const WeatherForecast({super.key, this.weatherCondition});
+  const WeatherForecast({super.key, this.weatherInfo});
 
-  final WeatherCondition? weatherCondition;
+  final WeatherInfo? weatherInfo;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final weatherInfo = this.weatherInfo;
 
     return Column(
       children: [
         AspectRatio(
           aspectRatio: 1,
-          child: weatherCondition == null
+          child: weatherInfo == null
               ? const Placeholder()
               : SvgPicture.asset(
-                  'images/${weatherCondition!.name}.svg',
-                  semanticsLabel: '${weatherCondition!.name} image',
+                  'images/${weatherInfo.weatherCondition.name}.svg',
+                  semanticsLabel: '${weatherInfo.weatherCondition.name} image',
                 ),
         ),
         Padding(
@@ -28,7 +29,9 @@ class WeatherForecast extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '** ℃',
+                  weatherInfo == null
+                      ? '** ℃'
+                      : '${weatherInfo.minTemperature} ℃',
                   textAlign: TextAlign.center,
                   style: textTheme.labelLarge?.copyWith(
                     color: Colors.blue,
@@ -37,7 +40,9 @@ class WeatherForecast extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  '** ℃',
+                  weatherInfo == null
+                      ? '** ℃'
+                      : '${weatherInfo.maxTemperature} ℃',
                   textAlign: TextAlign.center,
                   style: textTheme.labelLarge?.copyWith(
                     color: Colors.red,
