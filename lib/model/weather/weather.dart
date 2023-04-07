@@ -10,7 +10,7 @@ class Weather {
 
   final YumemiWeather _weatherClient;
 
-  Result<WeatherInfo?, String> fetchWeather(WeatherRequest request) {
+  Result<WeatherInfo, String> fetchWeather(WeatherRequest request) {
     try {
       final json = jsonEncode(request);
       final weatherJsonData = _weatherClient.fetchWeather(json);
