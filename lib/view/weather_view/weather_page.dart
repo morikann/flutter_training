@@ -25,9 +25,9 @@ class _WeatherPageState extends State<WeatherPage> {
     _weather
         .fetchWeather(WeatherRequest(area: 'Tokyo', date: DateTime.now()))
         .when(
-      success: (response) {
+      success: (weatherInfo) {
         setState(() {
-          _weatherInfo = response;
+          _weatherInfo = weatherInfo;
         });
       },
       failure: (error) {

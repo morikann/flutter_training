@@ -15,8 +15,8 @@ class Weather {
       final json = jsonEncode(request);
       final weatherJsonData = _weatherClient.fetchWeather(json);
       final weatherData = jsonDecode(weatherJsonData) as Map<String, dynamic>;
-      final response = WeatherInfo.fromJson(weatherData);
-      return Result.success(response);
+      final weatherInfo = WeatherInfo.fromJson(weatherData);
+      return Result.success(weatherInfo);
     } on Exception catch (e) {
       debugPrint('$e');
       return const Result.failure('例外が発生しました。');
