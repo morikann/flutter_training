@@ -10,9 +10,9 @@ class Weather {
 
   final YumemiWeather _weatherClient;
 
-  Result<WeatherInfo, String> fetchWeather(WeatherForecastTarget query) {
+  Result<WeatherInfo, String> fetchWeather(WeatherForecastTarget target) {
     try {
-      final json = jsonEncode(query);
+      final json = jsonEncode(target);
       final weatherJsonData = _weatherClient.fetchWeather(json);
       final weatherData = jsonDecode(weatherJsonData) as Map<String, dynamic>;
       final weatherInfo = WeatherInfo.fromJson(weatherData);
