@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/model/weather/weather.dart';
+import 'package:flutter_training/model/weather/weather_forecast_target.dart';
 import 'package:flutter_training/model/weather/weather_info.dart';
-import 'package:flutter_training/model/weather/weather_query.dart';
 import 'package:flutter_training/view/component/error_dialog.dart';
 import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +23,12 @@ class _WeatherPageState extends State<WeatherPage> {
 
   void _fetchWeather() {
     _weather
-        .fetchWeather(WeatherQuery(area: 'Tokyo', date: DateTime.now()))
+        .fetchWeather(
+      WeatherForecastTarget(
+        area: 'Tokyo',
+        date: DateTime.now(),
+      ),
+    )
         .when(
       success: (weatherInfo) {
         setState(() {

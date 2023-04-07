@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_training/common/result.dart';
+import 'package:flutter_training/model/weather/weather_forecast_target.dart';
 import 'package:flutter_training/model/weather/weather_info.dart';
-import 'package:flutter_training/model/weather/weather_query.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class Weather {
@@ -10,7 +10,7 @@ class Weather {
 
   final YumemiWeather _weatherClient;
 
-  Result<WeatherInfo, String> fetchWeather(WeatherQuery query) {
+  Result<WeatherInfo, String> fetchWeather(WeatherForecastTarget query) {
     try {
       final json = jsonEncode(query);
       final weatherJsonData = _weatherClient.fetchWeather(json);
