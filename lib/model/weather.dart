@@ -1,37 +1,22 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_training/common/result.dart';
+import 'package:flutter_training/model/weather_info.dart';
+import 'package:flutter_training/model/weather_request.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
-
-enum WeatherCondition {
-  sunny,
-  cloudy,
-  rainy,
-}
-
-extension _WeatherConditionExt on Iterable<WeatherCondition> {
-  WeatherCondition? byNameOrNull(String name) {
-    for (final element in this) {
-      if (element.name == name) {
-        return element;
-      }
-    }
-    return null;
-  }
-}
 
 class Weather {
   const Weather(this._weatherClient);
 
   final YumemiWeather _weatherClient;
 
-  Result<WeatherCondition?, String> fetchWeather() {
+  Result<WeatherInfo?, String> fetchWeather(WeatherRequest request) {
     try {
-      final condition = _weatherClient.fetchThrowsWeather('Tokyo');
-      final weatherCondition = WeatherCondition.values.byNameOrNull(condition);
-      if (weatherCondition == null) {
-        return const Result.failure('不明な天気予報です。');
-      }
-      return Result.success(weatherCondition);
+      final json = jsonEncode(request);
+      final weatherJsonData = _weatherClient.fetchWeather(json);
+      final weatherData = jsonDecode(weatherJsonData) as Map<String, dynamic>;
+      final response = WeatherInfo.fromJson(weatherData);
+      return Result.success(response);
     } on Exception catch (e) {
       debugPrint('$e');
       return const Result.failure('例外が発生しました。');

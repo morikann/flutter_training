@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/model/weather.dart';
+import 'package:flutter_training/model/weather_info.dart';
+import 'package:flutter_training/model/weather_request.dart';
 import 'package:flutter_training/view/weather_view/component/error_dialog.dart';
 import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
 import 'package:go_router/go_router.dart';
@@ -17,13 +19,15 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  WeatherCondition? _weatherCondition;
+  WeatherInfo? _weatherInfo;
 
   void _fetchWeather() {
-    _weather.fetchWeather().when(
-      success: (condition) {
+    _weather
+        .fetchWeather(WeatherRequest(area: 'Tokyo', date: DateTime.now()))
+        .when(
+      success: (response) {
         setState(() {
-          _weatherCondition = condition;
+          _weatherInfo = response;
         });
       },
       failure: (error) {
@@ -53,7 +57,7 @@ class _WeatherPageState extends State<WeatherPage> {
           child: Column(
             children: [
               const Spacer(),
-              WeatherForecast(weatherCondition: _weatherCondition),
+              WeatherForecast(weatherInfo: _weatherInfo),
               Flexible(
                 child: Column(
                   children: [
