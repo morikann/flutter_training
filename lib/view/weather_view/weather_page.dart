@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_training/model/weather.dart';
-import 'package:flutter_training/model/weather_info.dart';
-import 'package:flutter_training/model/weather_request.dart';
+import 'package:flutter_training/model/weather/weather.dart';
+import 'package:flutter_training/model/weather/weather_info.dart';
+import 'package:flutter_training/model/weather/weather_request.dart';
 import 'package:flutter_training/view/weather_view/component/error_dialog.dart';
 import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
 import 'package:go_router/go_router.dart';

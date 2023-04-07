@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_training/common/result.dart';
-import 'package:flutter_training/model/weather_info.dart';
-import 'package:flutter_training/model/weather_request.dart';
+import 'package:flutter_training/model/weather/weather_info.dart';
+import 'package:flutter_training/model/weather/weather_request.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class Weather {

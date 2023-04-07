@@ -1,3 +1,5 @@
+import 'package:flutter_training/model/weather/weather_condition.dart';
+
 class WeatherInfo {
   const WeatherInfo({
     required this.weatherCondition,
@@ -43,21 +45,4 @@ class WeatherInfo {
   final int maxTemperature;
   final int minTemperature;
   final DateTime date;
-}
-
-enum WeatherCondition {
-  sunny,
-  cloudy,
-  rainy,
-}
-
-extension _WeatherConditionExt on Iterable<WeatherCondition> {
-  WeatherCondition? byNameOrNull(String name) {
-    for (final element in this) {
-      if (element.name == name) {
-        return element;
-      }
-    }
-    return null;
-  }
 }

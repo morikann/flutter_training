@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_training/model/weather_info.dart';
+import 'package:flutter_training/model/weather/weather_info.dart';
 
 class WeatherForecast extends StatelessWidget {
   const WeatherForecast({super.key, this.weatherInfo});
