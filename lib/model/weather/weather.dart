@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_training/common/result.dart';
 import 'package:flutter_training/model/weather/weather_forecast_target.dart';

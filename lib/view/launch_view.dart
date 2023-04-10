@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_training/view/weather_view/weather_page.dart';
 import 'package:go_router/go_router.dart';
