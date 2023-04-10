@@ -1,48 +1,17 @@
 import 'package:flutter_training/model/weather/weather_condition.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'weather_info.freezed.dart';
+part 'weather_info.g.dart';
 
-class WeatherInfo {
-  const WeatherInfo({
-    required this.weatherCondition,
-    required this.maxTemperature,
-    required this.minTemperature,
-    required this.date,
-  });
+@freezed
+class WeatherInfo with _$WeatherInfo {
+  const factory WeatherInfo({
+    required WeatherCondition weatherCondition,
+    required int maxTemperature,
+    required int minTemperature,
+    required DateTime date,
+  }) = _WeatherInfo;
 
-  factory WeatherInfo.fromJson(Map<String, dynamic> json) {
-    Never throwFormatException(String message) =>
-        throw FormatException(message);
-
-    final weatherCondition = WeatherCondition.values
-        .byNameOrNull(json['weather_condition'].toString());
-    if (weatherCondition == null) {
-      throwFormatException('weather_condition の値が適切ではありません。');
-    }
-
-    final maxTemperature = int.tryParse(json['max_temperature'].toString());
-    if (maxTemperature == null) {
-      throwFormatException('max_temperature の値が適切ではありません。');
-    }
-
-    final minTemperature = int.tryParse(json['min_temperature'].toString());
-    if (minTemperature == null) {
-      throwFormatException('min_temperature の値が適切ではありません。');
-    }
-
-    final date = json['date']?.toString();
-    if (date == null) {
-      throwFormatException('date の値が適切ではありません。');
-    }
-
-    return WeatherInfo(
-      weatherCondition: weatherCondition,
-      maxTemperature: maxTemperature,
-      minTemperature: minTemperature,
-      date: DateTime.parse(date),
-    );
-  }
-
-  final WeatherCondition weatherCondition;
-  final int maxTemperature;
-  final int minTemperature;
-  final DateTime date;
+  factory WeatherInfo.fromJson(Map<String, Object?> json) =>
+      _$WeatherInfoFromJson(json);
 }
