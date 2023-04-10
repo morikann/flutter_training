@@ -1,16 +1,14 @@
-class WeatherForecastTarget {
-  WeatherForecastTarget({
-    required this.area,
-    required this.date,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'weather_forecast_target.freezed.dart';
+part 'weather_forecast_target.g.dart';
 
-  final String area;
-  final DateTime date;
+@freezed
+class WeatherForecastTarget with _$WeatherForecastTarget {
+  const factory WeatherForecastTarget({
+    required String area,
+    required DateTime date,
+  }) = _WeatherForecastTarget;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'area': area,
-      'date': date.toString(),
-    };
-  }
+  factory WeatherForecastTarget.fromJson(Map<String, Object?> json) =>
+      _$WeatherForecastTargetFromJson(json);
 }
