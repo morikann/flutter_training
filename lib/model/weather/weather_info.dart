@@ -1,5 +1,6 @@
 import 'package:flutter_training/model/weather/weather_condition.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'weather_info.freezed.dart';
 part 'weather_info.g.dart';
 

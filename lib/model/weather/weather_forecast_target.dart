@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'weather_forecast_target.freezed.dart';
 part 'weather_forecast_target.g.dart';
 
