@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_training/view/weather_view/weather_page.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +12,7 @@ mixin AfterDisplayLayoutMixin<T extends StatefulWidget> on State<T> {
     super.initState();
 
     WidgetsBinding.instance.endOfFrame.then((_) {
-        afterDisplayLayout();
+      afterDisplayLayout();
     });
   }
 }
