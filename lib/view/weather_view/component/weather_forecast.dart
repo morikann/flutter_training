@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_training/model/weather/weather_info.dart';
+import 'package:flutter_training/provider/weather_info_state_provider.dart';
 
-class WeatherForecast extends StatelessWidget {
-  const WeatherForecast({super.key, this.weatherInfo});
-
-  final WeatherInfo? weatherInfo;
+class WeatherForecast extends ConsumerWidget {
+  const WeatherForecast({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
-    final weatherInfo = this.weatherInfo;
+    final weatherInfo = ref.watch(weatherInfoStateProvider);
 
     return Column(
       children: [

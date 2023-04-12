@@ -1,60 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_training/model/weather/weather.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/model/weather/weather_forecast_target.dart';
-import 'package:flutter_training/model/weather/weather_info.dart';
+import 'package:flutter_training/provider/weather_info_state_provider.dart';
+import 'package:flutter_training/provider/weather_page_ui_state_provider.dart';
 import 'package:flutter_training/view/component/error_dialog.dart';
 import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yumemi_weather/yumemi_weather.dart';
 
-final _weather = Weather(YumemiWeather());
+// final _weather = Weather(YumemiWeather());
 
-class WeatherPage extends StatefulWidget {
+class WeatherPage extends ConsumerWidget {
   const WeatherPage({super.key});
 
   static const path = '/weather_page';
 
   @override
-  State<WeatherPage> createState() => _WeatherPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(weatherPageUiStateProvider, (previous, next) {
+      next.when(
+        init: () {},
+        success: (weatherInfo) {
+          ref
+              .read(weatherInfoStateProvider.notifier)
+              .update((state) => weatherInfo);
+        },
+        failure: (error) {
+          showDialog<void>(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return ErrorDialog(
+                errorDescription: error,
+              );
+            },
+          );
+        },
+      );
+    });
 
-class _WeatherPageState extends State<WeatherPage> {
-  WeatherInfo? _weatherInfo;
-
-  void _fetchWeather() {
-    _weather
-        .fetchWeather(
-      WeatherForecastTarget(
-        area: 'Tokyo',
-        date: DateTime.now(),
-      ),
-    )
-        .when(
-      success: (weatherInfo) {
-        setState(() {
-          _weatherInfo = weatherInfo;
-        });
-      },
-      failure: (error) {
-        _showErrorDialog(error);
-      },
-    );
-  }
-
-  void _showErrorDialog(String error) {
-    showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return ErrorDialog(
-          errorDescription: error,
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: FractionallySizedBox(
@@ -62,7 +45,7 @@ class _WeatherPageState extends State<WeatherPage> {
           child: Column(
             children: [
               const Spacer(),
-              WeatherForecast(weatherInfo: _weatherInfo),
+              const WeatherForecast(),
               Flexible(
                 child: Column(
                   children: [
@@ -79,7 +62,16 @@ class _WeatherPageState extends State<WeatherPage> {
                         ),
                         Expanded(
                           child: TextButton(
-                            onPressed: _fetchWeather,
+                            onPressed: () {
+                              ref
+                                  .read(weatherPageUiStateProvider.notifier)
+                                  .fetchWeather(
+                                    WeatherForecastTarget(
+                                      area: 'Tokyo',
+                                      date: DateTime.now(),
+                                    ),
+                                  );
+                            },
                             child: const Text('Reload'),
                           ),
                         ),
