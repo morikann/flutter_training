@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/model/weather/weather_forecast_target.dart';
-import 'package:flutter_training/provider/weather_info_state_provider.dart';
-import 'package:flutter_training/provider/weather_page_ui_state_provider.dart';
+import 'package:flutter_training/usecase/fetch_weather_use_case.dart';
 import 'package:flutter_training/view/component/error_dialog.dart';
 import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
+import 'package:flutter_training/view/weather_view/weather_page_ui_state.dart';
 import 'package:go_router/go_router.dart';
-
-// final _weather = Weather(YumemiWeather());
 
 class WeatherPage extends ConsumerWidget {
   const WeatherPage({super.key});
@@ -16,14 +14,9 @@ class WeatherPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(weatherPageUiStateProvider, (previous, next) {
+    ref.listen(weatherPageUiStateProvider, (_, next) {
       next.when(
         init: () {},
-        success: (weatherInfo) {
-          ref
-              .read(weatherInfoStateProvider.notifier)
-              .update((state) => weatherInfo);
-        },
         failure: (error) {
           showDialog<void>(
             context: context,
@@ -63,9 +56,7 @@ class WeatherPage extends ConsumerWidget {
                         Expanded(
                           child: TextButton(
                             onPressed: () {
-                              ref
-                                  .read(weatherPageUiStateProvider.notifier)
-                                  .fetchWeather(
+                              ref.read(fetchWeatherUseCaseProvider).getWeather(
                                     WeatherForecastTarget(
                                       area: 'Tokyo',
                                       date: DateTime.now(),

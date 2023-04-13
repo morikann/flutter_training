@@ -19,21 +19,18 @@ mixin _$WeatherPageUiState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
-    required TResult Function(WeatherInfo value) success,
     required TResult Function(String error) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
-    TResult? Function(WeatherInfo value)? success,
     TResult? Function(String error)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
-    TResult Function(WeatherInfo value)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) =>
@@ -41,21 +38,18 @@ mixin _$WeatherPageUiState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
-    required TResult Function(Success value) success,
     required TResult Function(Failure value) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
-    TResult? Function(Success value)? success,
     TResult? Function(Failure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
-    TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
     required TResult orElse(),
   }) =>
@@ -117,7 +111,6 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
-    required TResult Function(WeatherInfo value) success,
     required TResult Function(String error) failure,
   }) {
     return init();
@@ -127,7 +120,6 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
-    TResult? Function(WeatherInfo value)? success,
     TResult? Function(String error)? failure,
   }) {
     return init?.call();
@@ -137,7 +129,6 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
-    TResult Function(WeatherInfo value)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -151,7 +142,6 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
-    required TResult Function(Success value) success,
     required TResult Function(Failure value) failure,
   }) {
     return init(this);
@@ -161,7 +151,6 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
-    TResult? Function(Success value)? success,
     TResult? Function(Failure value)? failure,
   }) {
     return init?.call(this);
@@ -171,7 +160,6 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
-    TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
     required TResult orElse(),
   }) {
@@ -184,153 +172,6 @@ class _$Init implements Init {
 
 abstract class Init implements WeatherPageUiState {
   const factory Init() = _$Init;
-}
-
-/// @nodoc
-abstract class _$$SuccessCopyWith<$Res> {
-  factory _$$SuccessCopyWith(_$Success value, $Res Function(_$Success) then) =
-      __$$SuccessCopyWithImpl<$Res>;
-  @useResult
-  $Res call({WeatherInfo value});
-
-  $WeatherInfoCopyWith<$Res> get value;
-}
-
-/// @nodoc
-class __$$SuccessCopyWithImpl<$Res>
-    extends _$WeatherPageUiStateCopyWithImpl<$Res, _$Success>
-    implements _$$SuccessCopyWith<$Res> {
-  __$$SuccessCopyWithImpl(_$Success _value, $Res Function(_$Success) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? value = null,
-  }) {
-    return _then(_$Success(
-      null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as WeatherInfo,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $WeatherInfoCopyWith<$Res> get value {
-    return $WeatherInfoCopyWith<$Res>(_value.value, (value) {
-      return _then(_value.copyWith(value: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$Success implements Success {
-  const _$Success(this.value);
-
-  @override
-  final WeatherInfo value;
-
-  @override
-  String toString() {
-    return 'WeatherPageUiState.success(value: $value)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$Success &&
-            (identical(other.value, value) || other.value == value));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, value);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SuccessCopyWith<_$Success> get copyWith =>
-      __$$SuccessCopyWithImpl<_$Success>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() init,
-    required TResult Function(WeatherInfo value) success,
-    required TResult Function(String error) failure,
-  }) {
-    return success(value);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? init,
-    TResult? Function(WeatherInfo value)? success,
-    TResult? Function(String error)? failure,
-  }) {
-    return success?.call(value);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(WeatherInfo value)? success,
-    TResult Function(String error)? failure,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(value);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Init value) init,
-    required TResult Function(Success value) success,
-    required TResult Function(Failure value) failure,
-  }) {
-    return success(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Init value)? init,
-    TResult? Function(Success value)? success,
-    TResult? Function(Failure value)? failure,
-  }) {
-    return success?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Init value)? init,
-    TResult Function(Success value)? success,
-    TResult Function(Failure value)? failure,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Success implements WeatherPageUiState {
-  const factory Success(final WeatherInfo value) = _$Success;
-
-  WeatherInfo get value;
-  @JsonKey(ignore: true)
-  _$$SuccessCopyWith<_$Success> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -396,7 +237,6 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
-    required TResult Function(WeatherInfo value) success,
     required TResult Function(String error) failure,
   }) {
     return failure(error);
@@ -406,7 +246,6 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
-    TResult? Function(WeatherInfo value)? success,
     TResult? Function(String error)? failure,
   }) {
     return failure?.call(error);
@@ -416,7 +255,6 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
-    TResult Function(WeatherInfo value)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -430,7 +268,6 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
-    required TResult Function(Success value) success,
     required TResult Function(Failure value) failure,
   }) {
     return failure(this);
@@ -440,7 +277,6 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
-    TResult? Function(Success value)? success,
     TResult? Function(Failure value)? failure,
   }) {
     return failure?.call(this);
@@ -450,7 +286,6 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
-    TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
     required TResult orElse(),
   }) {
