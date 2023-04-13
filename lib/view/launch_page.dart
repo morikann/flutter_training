@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_training/view/weather_view/weather_page.dart';
+import 'package:flutter_training/view/weather/weather_page.dart';
 import 'package:go_router/go_router.dart';
 
 mixin AfterDisplayLayoutMixin<T extends StatefulWidget> on State<T> {
@@ -17,16 +17,16 @@ mixin AfterDisplayLayoutMixin<T extends StatefulWidget> on State<T> {
   }
 }
 
-class LaunchView extends StatefulWidget {
-  const LaunchView({super.key});
+class LaunchPage extends StatefulWidget {
+  const LaunchPage({super.key});
 
   static const path = '/';
 
   @override
-  State<LaunchView> createState() => _LaunchViewState();
+  State<LaunchPage> createState() => _LaunchPageState();
 }
 
-class _LaunchViewState extends State<LaunchView> with AfterDisplayLayoutMixin {
+class _LaunchPageState extends State<LaunchPage> with AfterDisplayLayoutMixin {
   Future<void> _toWeatherView() async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
     if (!mounted) {
