@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/model/weather/weather_forecast_target.dart';
 import 'package:flutter_training/usecase/fetch_weather_use_case.dart';
 import 'package:flutter_training/view/component/error_dialog.dart';
-import 'package:flutter_training/view/weather_view/component/weather_forecast.dart';
-import 'package:flutter_training/view/weather_view/weather_page_ui_state.dart';
+import 'package:flutter_training/view/weather/component/weather_forecast.dart';
+import 'package:flutter_training/view/weather/weather_page_ui_state.dart';
 import 'package:go_router/go_router.dart';
 
 class WeatherPage extends ConsumerWidget {
