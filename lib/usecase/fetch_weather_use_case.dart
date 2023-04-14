@@ -3,11 +3,15 @@ import 'package:flutter_training/model/weather/weather_forecast_target.dart';
 import 'package:flutter_training/repository/weather_repository.dart';
 import 'package:flutter_training/view/weather/component/weather_forecast.dart';
 import 'package:flutter_training/view/weather/weather_page_ui_state.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final fetchWeatherUseCaseProvider = Provider((ref) {
+part 'fetch_weather_use_case.g.dart';
+
+@riverpod
+FetchWeatherUseCase fetchWeatherUseCase(FetchWeatherUseCaseRef ref) {
   final weatherRepository = ref.watch(weatherRepositoryProvider);
   return FetchWeatherUseCase(weatherRepository, ref);
-});
+}
 
 class FetchWeatherUseCase {
   const FetchWeatherUseCase(this.repository, this.ref);

@@ -1,14 +1,17 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/common/result.dart';
 import 'package:flutter_training/datastore/weather_datastore.dart';
 import 'package:flutter_training/model/weather/weather_forecast_target.dart';
 import 'package:flutter_training/model/weather/weather_info.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
-final weatherRepositoryProvider = Provider((ref) {
-  final weatherDatastore = ref.watch(weatherDatastoreProvider);
-  return WeatherRepository(weatherDatastore);
-});
+part 'weather_repository.g.dart';
+
+@riverpod
+WeatherRepository weatherRepository(WeatherRepositoryRef ref) {
+  final weatherData = ref.watch(weatherDatastoreProvider);
+  return WeatherRepository(weatherData);
+}
 
 class WeatherRepository {
   const WeatherRepository(this.datastore);
