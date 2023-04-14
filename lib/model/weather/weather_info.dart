@@ -10,7 +10,6 @@ class WeatherInfo with _$WeatherInfo {
     required WeatherCondition weatherCondition,
     required int maxTemperature,
     required int minTemperature,
-    required DateTime date,
   }) = _WeatherInfo;
 
   factory WeatherInfo.fromJson(Map<String, Object?> json) =>
