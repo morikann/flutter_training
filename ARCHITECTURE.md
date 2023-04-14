@@ -66,16 +66,18 @@ flowchart TB
     - エラー時にはエラーダイアログを表示 
 
 ### UseCase
+- プレゼンテーションを更新する処理
 - repositoryからデータを取得
-  - 取得したデータの内容によって、weatherInfoStateProvider, weatherPageUiStateProviderの状態を更新
+  - 取得したデータの内容によって各種Providerを更新
 
 ### Repository
 - datastoreからデータを取得
 - データをアプリで使いやすいやすい形に変換
 - エラーハンドリングを行う
-- Result型に変換してusecaseに返す
+- Result型に変換してUseCaseに返す
 
 ### DataStore
+- データ取得先を隠蔽する
 - APIからデータを取得する
 - jsonをMapに変換してrepositoryに返す
 
