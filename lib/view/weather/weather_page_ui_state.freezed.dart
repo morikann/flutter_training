@@ -19,19 +19,19 @@ mixin _$WeatherPageUiState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
-    required TResult Function(String error) failure,
+    required TResult Function(String errorMessage) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
-    TResult? Function(String error)? failure,
+    TResult? Function(String errorMessage)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
-    TResult Function(String error)? failure,
+    TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -99,19 +99,10 @@ class _$Init implements Init {
   }
 
   @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Init);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
-    required TResult Function(String error) failure,
+    required TResult Function(String errorMessage) failure,
   }) {
     return init();
   }
@@ -120,7 +111,7 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
-    TResult? Function(String error)? failure,
+    TResult? Function(String errorMessage)? failure,
   }) {
     return init?.call();
   }
@@ -129,7 +120,7 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
-    TResult Function(String error)? failure,
+    TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -179,7 +170,7 @@ abstract class _$$FailureCopyWith<$Res> {
   factory _$$FailureCopyWith(_$Failure value, $Res Function(_$Failure) then) =
       __$$FailureCopyWithImpl<$Res>;
   @useResult
-  $Res call({String error});
+  $Res call({String errorMessage});
 }
 
 /// @nodoc
@@ -192,12 +183,12 @@ class __$$FailureCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = null,
+    Object? errorMessage = null,
   }) {
     return _then(_$Failure(
-      null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
+      null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -206,26 +197,15 @@ class __$$FailureCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Failure implements Failure {
-  const _$Failure(this.error);
+  _$Failure(this.errorMessage);
 
   @override
-  final String error;
+  String errorMessage;
 
   @override
   String toString() {
-    return 'WeatherPageUiState.failure(error: $error)';
+    return 'WeatherPageUiState.failure(errorMessage: $errorMessage)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$Failure &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
 
   @JsonKey(ignore: true)
   @override
@@ -237,29 +217,29 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
-    required TResult Function(String error) failure,
+    required TResult Function(String errorMessage) failure,
   }) {
-    return failure(error);
+    return failure(errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
-    TResult? Function(String error)? failure,
+    TResult? Function(String errorMessage)? failure,
   }) {
-    return failure?.call(error);
+    return failure?.call(errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
-    TResult Function(String error)? failure,
+    TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
-      return failure(error);
+      return failure(errorMessage);
     }
     return orElse();
   }
@@ -297,9 +277,10 @@ class _$Failure implements Failure {
 }
 
 abstract class Failure implements WeatherPageUiState {
-  const factory Failure(final String error) = _$Failure;
+  factory Failure(String errorMessage) = _$Failure;
 
-  String get error;
+  String get errorMessage;
+  set errorMessage(String value);
   @JsonKey(ignore: true)
   _$$FailureCopyWith<_$Failure> get copyWith =>
       throw _privateConstructorUsedError;

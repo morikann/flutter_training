@@ -14,18 +14,21 @@ class WeatherPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(weatherPageUiStateProvider, (_, next) {
-      next.when(
-        init: () {},
-        failure: (error) {
-          showDialog<void>(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return ErrorDialog(
-                errorDescription: error,
-              );
-            },
+    ref.listen(
+        weatherPageUiStateProvider.select(
+          (value) => value.mapOrNull(
+            failure: (error) => error,
+          ),
+        ), (_, error) {
+      if (error == null) {
+        return;
+      }
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return ErrorDialog(
+            errorDescription: error.errorMessage,
           );
         },
       );
