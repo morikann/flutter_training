@@ -10,4 +10,4 @@ pre-commit:
       run: dart format {staged_files} && git add {staged_files}
     analyzer:
       glob: "*.dart"
-      run: dart analyze --fatal-infos --fatal-warnings lib
+      run: dart analyze --fatal-infos lib
