@@ -17,7 +17,7 @@ class WeatherDatastore {
 
   final YumemiWeather weatherClient;
 
-  Map<String, dynamic> fetchWeather(WeatherForecastTarget target) {
+  Map<String, dynamic> getWeather(WeatherForecastTarget target) {
     final json = jsonEncode(target);
     final weatherJsonData = weatherClient.fetchWeather(json);
     final weatherData = jsonDecode(weatherJsonData) as Map<String, dynamic>;

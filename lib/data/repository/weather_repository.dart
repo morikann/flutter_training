@@ -19,7 +19,7 @@ class WeatherRepository {
 
   Result<WeatherInfo, String> getWeather(WeatherForecastTarget target) {
     try {
-      final weatherData = datastore.fetchWeather(target);
+      final weatherData = datastore.getWeather(target);
       final weatherInfo = WeatherInfo.fromJson(weatherData);
       return Result.success(weatherInfo);
     } on YumemiWeatherError catch (e) {
