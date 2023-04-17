@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_training/model/weather/weather_forecast_target.dart';
-import 'package:flutter_training/repository/weather_repository.dart';
+import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
+import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:flutter_training/view/weather/component/weather_forecast.dart';
 import 'package:flutter_training/view/weather/weather_page_ui_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

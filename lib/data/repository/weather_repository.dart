@@ -1,7 +1,7 @@
 import 'package:flutter_training/common/result.dart';
-import 'package:flutter_training/datastore/weather_datastore.dart';
-import 'package:flutter_training/model/weather/weather_forecast_target.dart';
-import 'package:flutter_training/model/weather/weather_info.dart';
+import 'package:flutter_training/data/datastore/weather_datastore.dart';
+import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
+import 'package:flutter_training/data/model/weather/weather_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
