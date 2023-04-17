@@ -59,7 +59,9 @@ class WeatherPage extends ConsumerWidget {
                         Expanded(
                           child: TextButton(
                             onPressed: () {
-                              ref.read(fetchWeatherUseCaseProvider).getWeather(
+                              ref
+                                  .read(fetchWeatherUseCaseProvider)
+                                  .fetchWeather(
                                     WeatherForecastTarget(
                                       area: 'Tokyo',
                                       date: DateTime.now(),

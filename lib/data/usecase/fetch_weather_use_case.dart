@@ -19,7 +19,7 @@ class FetchWeatherUseCase {
   final WeatherRepository repository;
   final Ref ref;
 
-  void getWeather(WeatherForecastTarget target) {
+  void fetchWeather(WeatherForecastTarget target) {
     final result = repository.getWeather(target);
     // ignore: cascade_invocations
     result.when(
