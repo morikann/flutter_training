@@ -20,11 +20,15 @@ class WeatherDatastore {
   Map<String, dynamic> getWeather(WeatherForecastTarget target) {
     final json = toJson(target);
     final weatherJsonData = weatherClient.fetchWeather(json);
-    final weatherData = jsonDecode(weatherJsonData) as Map<String, dynamic>;
+    final weatherData = toMap(weatherJsonData);
     return weatherData;
   }
 
   String toJson(WeatherForecastTarget target) {
     return jsonEncode(target);
+  }
+
+  Map<String, dynamic> toMap(String json) {
+    return jsonDecode(json) as Map<String, dynamic>;
   }
 }
