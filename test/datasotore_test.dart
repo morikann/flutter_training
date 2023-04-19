@@ -1,11 +1,32 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/datastore/weather_datastore.dart';
 import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
+import 'package:mockito/mockito.dart';
+import 'package:yumemi_weather/yumemi_weather.dart';
 
 import 'mock/mock.mocks.dart';
 
 void main() {
   group('WeatherDatastore', () {
+    test(
+        'getWeather throws YumemiWeatherError.unknown when fetchWeather throws unknown error',
+        () {
+      final mockYumemiWeather = MockYumemiWeather();
+      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
+      final target = WeatherForecastTarget(
+        area: 'Tokyo',
+        date: DateTime(2023, 4, 19),
+      );
+
+      when(mockYumemiWeather.fetchWeather(any))
+          .thenThrow(YumemiWeatherError.unknown);
+
+      expect(
+        () => weatherDatastore.getWeather(target),
+        throwsA(isA<YumemiWeatherError>()),
+      );
+    });
+
     test('encode WeatherForecastTarget successfully', () {
       final mockYumemiWeather = MockYumemiWeather();
       final weatherDatastore = WeatherDatastore(mockYumemiWeather);
