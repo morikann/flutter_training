@@ -9,6 +9,25 @@ import 'mock/mock.mocks.dart';
 void main() {
   group('WeatherDatastore', () {
     test(
+        'getWeather throws YumemiWeatherError.invalidParameter when fetchWeather throws invalidParameter error',
+        () {
+      final mockYumemiWeather = MockYumemiWeather();
+      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
+      final target = WeatherForecastTarget(
+        area: 'Tokyo',
+        date: DateTime(2023, 4, 19),
+      );
+
+      when(mockYumemiWeather.fetchWeather(any))
+          .thenThrow(YumemiWeatherError.invalidParameter);
+
+      expect(
+        () => weatherDatastore.getWeather(target),
+        throwsA(isA<YumemiWeatherError>()),
+      );
+    });
+
+    test(
         'getWeather throws YumemiWeatherError.unknown when fetchWeather throws unknown error',
         () {
       final mockYumemiWeather = MockYumemiWeather();
