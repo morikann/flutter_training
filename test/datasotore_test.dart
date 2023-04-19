@@ -1,10 +1,27 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/datastore/weather_datastore.dart';
+import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
 
 import 'mock/mock.mocks.dart';
 
 void main() {
   group('WeatherDatastore', () {
+    test('encode WeatherForecastTarget successfully', () {
+      final mockYumemiWeather = MockYumemiWeather();
+      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
+      final target = WeatherForecastTarget(
+        area: 'Tokyo',
+        date: DateTime(2023, 4, 19),
+      );
+
+      final weatherJson = weatherDatastore.toJson(target);
+
+      expect(
+        weatherJson,
+        '{"area":"Tokyo","date":"2023-04-19T00:00:00.000"}',
+      );
+    });
+
     test('decode WeatherJson to Map', () {
       final mockYumemiWeather = MockYumemiWeather();
       final weatherDatastore = WeatherDatastore(mockYumemiWeather);
