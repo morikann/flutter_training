@@ -8,6 +8,27 @@ import 'mock/mock.mocks.dart';
 
 void main() {
   group('WeatherDatastore', () {
+    test('getWeather returns valid weather data successfully', () {
+      final mockYumemiWeather = MockYumemiWeather();
+      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
+      final target = WeatherForecastTarget(
+        area: 'Tokyo',
+        date: DateTime(2023, 4, 19),
+      );
+
+      const weatherJson =
+          '{"weather_condition": "cloudy", "max_temperature": 25, "min_temperature": 7, "date": "2023-04-19T00:00:00.000"}';
+
+      when(mockYumemiWeather.fetchWeather(any)).thenReturn(weatherJson);
+
+      final weatherData = weatherDatastore.getWeather(target);
+
+      expect(weatherData['weather_condition'], 'cloudy');
+      expect(weatherData['max_temperature'], 25);
+      expect(weatherData['min_temperature'], 7);
+      expect(weatherData['date'], '2023-04-19T00:00:00.000');
+    });
+
     test(
         'getWeather throws YumemiWeatherError.invalidParameter when fetchWeather throws invalidParameter error',
         () {
