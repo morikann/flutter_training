@@ -7,6 +7,7 @@ import 'package:flutter_training/data/model/weather/weather_info.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:yumemi_weather/yumemi_weather.dart';
 
 import 'weather_repository_test.mocks.dart';
 
@@ -48,5 +49,35 @@ void main() {
         ),
       );
     });
+  });
+
+  // 失敗ケース1
+  // datastoreがYumemiWeatherError.invalidParameterを投げるとき
+  // Result<String>('パラメータが間違っています。')を返す
+  test('''
+      When WeatherDatastore throws YumemiWeatherError.invalidParameter,
+      returns Result<WeatherInfo, String>.failure
+    ''', () {
+    // Arrange
+    final weatherDatasotre = MockWeatherDatastore();
+    final weatherRepository = WeatherRepository(weatherDatasotre);
+    final target = WeatherForecastTarget(
+      area: 'Tokyo',
+      date: DateTime(2023, 4, 19),
+    );
+
+    when(weatherDatasotre.getWeather(any))
+        .thenThrow(YumemiWeatherError.invalidParameter);
+
+    // Act
+    final result = weatherRepository.getWeather(target);
+
+    // Assert
+    expect(
+      result,
+      const Result<WeatherInfo, String>.failure(
+        'パラメータが間違っています。',
+      ),
+    );
   });
 }
