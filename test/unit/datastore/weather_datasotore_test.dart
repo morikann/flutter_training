@@ -1,11 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/datastore/weather_datastore.dart';
 import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
-import '../../mock/mock.mocks.dart';
+import 'weather_datasotore_test.mocks.dart';
 
+@GenerateNiceMocks([MockSpec<YumemiWeather>()])
 void main() {
   group('WeatherDatastore', () {
     final mockYumemiWeather = MockYumemiWeather();
