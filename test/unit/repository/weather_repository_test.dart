@@ -80,4 +80,34 @@ void main() {
       ),
     );
   });
+
+  // 失敗ケース2
+  // datasotreがYumemiWeatherError.unknownを投げる時
+  // Result<String>('予期せぬ不具合が発生しました。')を返す
+  test('''
+      When WeatherDatastore throws YumemiWeatherError.unknown,
+      returns Result<WeatherInfo, String>.failure
+    ''', () {
+    // Arrange
+    final weatherDatasotre = MockWeatherDatastore();
+    final weatherRepository = WeatherRepository(weatherDatasotre);
+    final target = WeatherForecastTarget(
+      area: 'Tokyo',
+      date: DateTime(2023, 4, 19),
+    );
+
+    when(weatherDatasotre.getWeather(any))
+        .thenThrow(YumemiWeatherError.unknown);
+
+    // Act
+    final result = weatherRepository.getWeather(target);
+
+    // Assert
+    expect(
+      result,
+      const Result<WeatherInfo, String>.failure(
+        '予期せぬ不具合が発生しました。',
+      ),
+    );
+  });
 }
