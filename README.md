@@ -1,16 +1,37 @@
-# flutter_training
+# [株式会社ゆめみ Flutter 研修](https://github.com/yumemi-inc/flutter-training-template)
 
-A new Flutter project.
+## 環境構築
 
-## Getting Started
+#### リポジトリをクローン
+```
+git clone https://github.com/morikann/flutter_training.git
+```
 
-This project is a starting point for a Flutter application.
+#### ディレクトリを移動
+```
+cd flutter_training
+```
 
-A few resources to get you started if this is your first Flutter project:
+#### fvmをインストール
+```
+brew tap leoafarias/fvm
+brew install fvm
+```
+#### プロジェクトで指定されたバージョンのFlutterをインストール
+```
+fvm use
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+#### Lefthookをインストール
+```
+brew install lefthook
+lefthook install
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### パッケージをインストール
+```
+fvm flutter pub get
+```
+
+## Docs
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)

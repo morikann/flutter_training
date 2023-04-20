@@ -23,7 +23,6 @@ mixin _$WeatherInfo {
   WeatherCondition get weatherCondition => throw _privateConstructorUsedError;
   int get maxTemperature => throw _privateConstructorUsedError;
   int get minTemperature => throw _privateConstructorUsedError;
-  DateTime get date => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,8 +39,7 @@ abstract class $WeatherInfoCopyWith<$Res> {
   $Res call(
       {WeatherCondition weatherCondition,
       int maxTemperature,
-      int minTemperature,
-      DateTime date});
+      int minTemperature});
 }
 
 /// @nodoc
@@ -60,7 +58,6 @@ class _$WeatherInfoCopyWithImpl<$Res, $Val extends WeatherInfo>
     Object? weatherCondition = null,
     Object? maxTemperature = null,
     Object? minTemperature = null,
-    Object? date = null,
   }) {
     return _then(_value.copyWith(
       weatherCondition: null == weatherCondition
@@ -75,10 +72,6 @@ class _$WeatherInfoCopyWithImpl<$Res, $Val extends WeatherInfo>
           ? _value.minTemperature
           : minTemperature // ignore: cast_nullable_to_non_nullable
               as int,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 }
@@ -94,8 +87,7 @@ abstract class _$$_WeatherInfoCopyWith<$Res>
   $Res call(
       {WeatherCondition weatherCondition,
       int maxTemperature,
-      int minTemperature,
-      DateTime date});
+      int minTemperature});
 }
 
 /// @nodoc
@@ -112,7 +104,6 @@ class __$$_WeatherInfoCopyWithImpl<$Res>
     Object? weatherCondition = null,
     Object? maxTemperature = null,
     Object? minTemperature = null,
-    Object? date = null,
   }) {
     return _then(_$_WeatherInfo(
       weatherCondition: null == weatherCondition
@@ -127,10 +118,6 @@ class __$$_WeatherInfoCopyWithImpl<$Res>
           ? _value.minTemperature
           : minTemperature // ignore: cast_nullable_to_non_nullable
               as int,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -141,8 +128,7 @@ class _$_WeatherInfo implements _WeatherInfo {
   const _$_WeatherInfo(
       {required this.weatherCondition,
       required this.maxTemperature,
-      required this.minTemperature,
-      required this.date});
+      required this.minTemperature});
 
   factory _$_WeatherInfo.fromJson(Map<String, dynamic> json) =>
       _$$_WeatherInfoFromJson(json);
@@ -153,12 +139,10 @@ class _$_WeatherInfo implements _WeatherInfo {
   final int maxTemperature;
   @override
   final int minTemperature;
-  @override
-  final DateTime date;
 
   @override
   String toString() {
-    return 'WeatherInfo(weatherCondition: $weatherCondition, maxTemperature: $maxTemperature, minTemperature: $minTemperature, date: $date)';
+    return 'WeatherInfo(weatherCondition: $weatherCondition, maxTemperature: $maxTemperature, minTemperature: $minTemperature)';
   }
 
   @override
@@ -171,14 +155,13 @@ class _$_WeatherInfo implements _WeatherInfo {
             (identical(other.maxTemperature, maxTemperature) ||
                 other.maxTemperature == maxTemperature) &&
             (identical(other.minTemperature, minTemperature) ||
-                other.minTemperature == minTemperature) &&
-            (identical(other.date, date) || other.date == date));
+                other.minTemperature == minTemperature));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, weatherCondition, maxTemperature, minTemperature, date);
+      runtimeType, weatherCondition, maxTemperature, minTemperature);
 
   @JsonKey(ignore: true)
   @override
@@ -198,8 +181,7 @@ abstract class _WeatherInfo implements WeatherInfo {
   const factory _WeatherInfo(
       {required final WeatherCondition weatherCondition,
       required final int maxTemperature,
-      required final int minTemperature,
-      required final DateTime date}) = _$_WeatherInfo;
+      required final int minTemperature}) = _$_WeatherInfo;
 
   factory _WeatherInfo.fromJson(Map<String, dynamic> json) =
       _$_WeatherInfo.fromJson;
@@ -210,8 +192,6 @@ abstract class _WeatherInfo implements WeatherInfo {
   int get maxTemperature;
   @override
   int get minTemperature;
-  @override
-  DateTime get date;
   @override
   @JsonKey(ignore: true)
   _$$_WeatherInfoCopyWith<_$_WeatherInfo> get copyWith =>
