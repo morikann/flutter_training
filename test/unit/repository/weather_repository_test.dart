@@ -14,6 +14,14 @@ import 'weather_repository_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<WeatherDatastore>()])
 void main() {
   group('WeatherRepository', () {
+    // Arrange
+    final weatherDatasotre = MockWeatherDatastore();
+    final weatherRepository = WeatherRepository(weatherDatasotre);
+    final target = WeatherForecastTarget(
+      area: 'Tokyo',
+      date: DateTime(2023, 4, 19),
+    );
+
     // 成功ケース
     // datastoreが正しいMapを返すとき、Result<WeatherInfo>を返す
     test('''
@@ -21,12 +29,6 @@ void main() {
         returns Result<WeatherInfo, String>.success 
       ''', () {
       // Arrange
-      final weatherDatasotre = MockWeatherDatastore();
-      final weatherRepository = WeatherRepository(weatherDatasotre);
-      final target = WeatherForecastTarget(
-        area: 'Tokyo',
-        date: DateTime(2023, 4, 19),
-      );
       when(weatherDatasotre.getWeather(any)).thenReturn({
         'weather_condition': 'cloudy',
         'max_temperature': 25,
@@ -49,94 +51,73 @@ void main() {
         ),
       );
     });
-  });
 
-  // 失敗ケース1
-  // datastoreがYumemiWeatherError.invalidParameterを投げるとき
-  // Result<String>('パラメータが間違っています。')を返す
-  test('''
+    // 失敗ケース1
+    // datastoreがYumemiWeatherError.invalidParameterを投げるとき
+    // Result<String>('パラメータが間違っています。')を返す
+    test('''
       When WeatherDatastore throws YumemiWeatherError.invalidParameter,
       returns Result<WeatherInfo, String>.failure
     ''', () {
-    // Arrange
-    final weatherDatasotre = MockWeatherDatastore();
-    final weatherRepository = WeatherRepository(weatherDatasotre);
-    final target = WeatherForecastTarget(
-      area: 'Tokyo',
-      date: DateTime(2023, 4, 19),
-    );
+      // Arrange
+      when(weatherDatasotre.getWeather(any))
+          .thenThrow(YumemiWeatherError.invalidParameter);
 
-    when(weatherDatasotre.getWeather(any))
-        .thenThrow(YumemiWeatherError.invalidParameter);
+      // Act
+      final result = weatherRepository.getWeather(target);
 
-    // Act
-    final result = weatherRepository.getWeather(target);
+      // Assert
+      expect(
+        result,
+        const Result<WeatherInfo, String>.failure(
+          'パラメータが間違っています。',
+        ),
+      );
+    });
 
-    // Assert
-    expect(
-      result,
-      const Result<WeatherInfo, String>.failure(
-        'パラメータが間違っています。',
-      ),
-    );
-  });
-
-  // 失敗ケース2
-  // datasotreがYumemiWeatherError.unknownを投げる時
-  // Result<String>('予期せぬ不具合が発生しました。')を返す
-  test('''
+    // 失敗ケース2
+    // datasotreがYumemiWeatherError.unknownを投げる時
+    // Result<String>('予期せぬ不具合が発生しました。')を返す
+    test('''
       When WeatherDatastore throws YumemiWeatherError.unknown,
       returns Result<WeatherInfo, String>.failure
     ''', () {
-    // Arrange
-    final weatherDatasotre = MockWeatherDatastore();
-    final weatherRepository = WeatherRepository(weatherDatasotre);
-    final target = WeatherForecastTarget(
-      area: 'Tokyo',
-      date: DateTime(2023, 4, 19),
-    );
+      // Arrange
+      when(weatherDatasotre.getWeather(any))
+          .thenThrow(YumemiWeatherError.unknown);
 
-    when(weatherDatasotre.getWeather(any))
-        .thenThrow(YumemiWeatherError.unknown);
+      // Act
+      final result = weatherRepository.getWeather(target);
 
-    // Act
-    final result = weatherRepository.getWeather(target);
+      // Assert
+      expect(
+        result,
+        const Result<WeatherInfo, String>.failure(
+          '予期せぬ不具合が発生しました。',
+        ),
+      );
+    });
 
-    // Assert
-    expect(
-      result,
-      const Result<WeatherInfo, String>.failure(
-        '予期せぬ不具合が発生しました。',
-      ),
-    );
-  });
-
-  // 失敗ケース3
-  // datastoreがExceptionを投げる時、
-  // Result<String>('例外が発生しました。')を返す
-  test('''
+    // 失敗ケース3
+    // datastoreがExceptionを投げる時、
+    // Result<String>('例外が発生しました。')を返す
+    test('''
       When WeatherDatastore throws Exception,
       returns Result<WeatherInfo, String>.failure
     ''', () {
-    // Arrange
-    final weatherDatasotre = MockWeatherDatastore();
-    final weatherRepository = WeatherRepository(weatherDatasotre);
-    final target = WeatherForecastTarget(
-      area: 'Tokyo',
-      date: DateTime(2023, 4, 19),
-    );
+      // Arrange
+      when(weatherDatasotre.getWeather(any)).thenThrow(Exception());
 
-    when(weatherDatasotre.getWeather(any)).thenThrow(Exception());
+      // Act
+      final result = weatherRepository.getWeather(target);
 
-    // Act
-    final result = weatherRepository.getWeather(target);
-
-    // Assert
-    expect(
-      result,
-      const Result<WeatherInfo, String>.failure(
-        '例外が発生しました。',
-      ),
-    );
+      // Assert
+      expect(
+        result,
+        const Result<WeatherInfo, String>.failure(
+          '例外が発生しました。',
+        ),
+      );
+    });
   });
 }
