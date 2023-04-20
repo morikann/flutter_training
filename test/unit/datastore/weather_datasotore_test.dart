@@ -4,7 +4,7 @@ import 'package:flutter_training/data/model/weather/weather_forecast_target.dart
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
-import 'mock/mock.mocks.dart';
+import '../../mock/mock.mocks.dart';
 
 void main() {
   group('WeatherDatastore', () {
