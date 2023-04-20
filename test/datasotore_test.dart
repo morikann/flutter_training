@@ -8,16 +8,22 @@ import 'mock/mock.mocks.dart';
 
 void main() {
   group('WeatherDatastore', () {
-    test('getWeather returns valid weather data successfully', () {
-      final mockYumemiWeather = MockYumemiWeather();
-      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
-      final target = WeatherForecastTarget(
-        area: 'Tokyo',
-        date: DateTime(2023, 4, 19),
-      );
+    final mockYumemiWeather = MockYumemiWeather();
+    final weatherDatastore = WeatherDatastore(mockYumemiWeather);
+    final target = WeatherForecastTarget(
+      area: 'Tokyo',
+      date: DateTime(2023, 4, 19),
+    );
 
-      const weatherJson =
-          '{"weather_condition": "cloudy", "max_temperature": 25, "min_temperature": 7, "date": "2023-04-19T00:00:00.000"}';
+    test('getWeather returns valid weather data successfully', () {
+      const weatherJson = '''
+        {
+          "weather_condition": "cloudy",
+          "max_temperature": 25, 
+          "min_temperature": 7,
+          "date": "2023-04-19T00:00:00.000"
+        }
+        ''';
 
       when(mockYumemiWeather.fetchWeather(any)).thenReturn(weatherJson);
 
@@ -29,16 +35,10 @@ void main() {
       expect(weatherData['date'], '2023-04-19T00:00:00.000');
     });
 
-    test(
-        'getWeather throws YumemiWeatherError.invalidParameter when fetchWeather throws invalidParameter error',
-        () {
-      final mockYumemiWeather = MockYumemiWeather();
-      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
-      final target = WeatherForecastTarget(
-        area: 'Tokyo',
-        date: DateTime(2023, 4, 19),
-      );
-
+    test('''
+          getWeather throws YumemiWeatherError.invalidParameter 
+          when fetchWeather throws invalidParameter error
+        ''', () {
       when(mockYumemiWeather.fetchWeather(any))
           .thenThrow(YumemiWeatherError.invalidParameter);
 
@@ -48,16 +48,10 @@ void main() {
       );
     });
 
-    test(
-        'getWeather throws YumemiWeatherError.unknown when fetchWeather throws unknown error',
-        () {
-      final mockYumemiWeather = MockYumemiWeather();
-      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
-      final target = WeatherForecastTarget(
-        area: 'Tokyo',
-        date: DateTime(2023, 4, 19),
-      );
-
+    test('''
+          getWeather throws YumemiWeatherError.unknown 
+          when fetchWeather throws unknown error
+        ''', () {
       when(mockYumemiWeather.fetchWeather(any))
           .thenThrow(YumemiWeatherError.unknown);
 
@@ -68,13 +62,6 @@ void main() {
     });
 
     test('encode WeatherForecastTarget successfully', () {
-      final mockYumemiWeather = MockYumemiWeather();
-      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
-      final target = WeatherForecastTarget(
-        area: 'Tokyo',
-        date: DateTime(2023, 4, 19),
-      );
-
       final weatherJson = weatherDatastore.toJson(target);
 
       expect(
@@ -84,10 +71,14 @@ void main() {
     });
 
     test('decode WeatherJson to Map', () {
-      final mockYumemiWeather = MockYumemiWeather();
-      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
-      const weatherJson =
-          '{"weather_condition": "cloudy", "max_temperature": 25, "min_temperature": 7, "date": "2023-04-19T00:00:00.000"}';
+      const weatherJson = '''
+      {
+        "weather_condition": "cloudy", 
+        "max_temperature": 25, 
+        "min_temperature": 7, 
+        "date": "2023-04-19T00:00:00.000"
+      }
+      ''';
 
       final weatherData = weatherDatastore.toMap(weatherJson);
 
@@ -98,9 +89,6 @@ void main() {
     });
 
     test('decode invalid json to Map throws an exception', () {
-      final mockYumemiWeather = MockYumemiWeather();
-      final weatherDatastore = WeatherDatastore(mockYumemiWeather);
-
       // 無効なjson文字列
       const invalidJson = '{"invalid_json":}';
 
