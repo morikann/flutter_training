@@ -15,7 +15,10 @@ void main() {
   group('WeatherRepository', () {
     // 成功ケース
     // datastoreが正しいMapを返すとき、Result<WeatherInfo>を返す
-    test('Returns Result<WeatherInfo> when datastore returns Map', () {
+    test('''
+        When WeatherDatastore returns Map,
+        returns Result<WeatherInfo, String>.success 
+      ''', () {
       // Arrange
       final weatherDatasotre = MockWeatherDatastore();
       final weatherRepository = WeatherRepository(weatherDatasotre);
