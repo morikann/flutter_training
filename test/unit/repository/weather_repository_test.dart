@@ -110,4 +110,33 @@ void main() {
       ),
     );
   });
+
+  // 失敗ケース3
+  // datastoreがExceptionを投げる時、
+  // Result<String>('例外が発生しました。')を返す
+  test('''
+      When WeatherDatastore throws Exception,
+      returns Result<WeatherInfo, String>.failure
+    ''', () {
+    // Arrange
+    final weatherDatasotre = MockWeatherDatastore();
+    final weatherRepository = WeatherRepository(weatherDatasotre);
+    final target = WeatherForecastTarget(
+      area: 'Tokyo',
+      date: DateTime(2023, 4, 19),
+    );
+
+    when(weatherDatasotre.getWeather(any)).thenThrow(Exception());
+
+    // Act
+    final result = weatherRepository.getWeather(target);
+
+    // Assert
+    expect(
+      result,
+      const Result<WeatherInfo, String>.failure(
+        '例外が発生しました。',
+      ),
+    );
+  });
 }
