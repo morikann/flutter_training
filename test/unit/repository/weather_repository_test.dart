@@ -8,7 +8,7 @@ import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'weather_repository.mocks.dart';
+import 'weather_repository_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<WeatherDatastore>()])
 void main() {
