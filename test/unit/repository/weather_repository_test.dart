@@ -13,7 +13,7 @@ import 'weather_repository_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<WeatherDatastore>()])
 void main() {
   group('WeatherRepository', () {
-    // 成功
+    // 成功ケース
     // datastoreが正しいMapを返すとき、Result<WeatherInfo>を返す
     test('Returns Result<WeatherInfo> when datastore returns Map', () {
       // Arrange
