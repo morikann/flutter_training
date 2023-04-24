@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_training/common/constants/error_message.dart';
 import 'package:flutter_training/common/result.dart';
 import 'package:flutter_training/data/datastore/weather_datastore.dart';
 import 'package:flutter_training/data/model/weather/weather_condition.dart';
@@ -70,7 +71,7 @@ void main() {
       expect(
         result,
         const Result<WeatherInfo, String>.failure(
-          'パラメータが間違っています。',
+          ErrorMessage.invalidParameter,
         ),
       );
     });
@@ -93,7 +94,7 @@ void main() {
       expect(
         result,
         const Result<WeatherInfo, String>.failure(
-          '予期せぬ不具合が発生しました。',
+          ErrorMessage.unknown,
         ),
       );
     });
@@ -115,7 +116,7 @@ void main() {
       expect(
         result,
         const Result<WeatherInfo, String>.failure(
-          '例外が発生しました。',
+          ErrorMessage.other,
         ),
       );
     });
