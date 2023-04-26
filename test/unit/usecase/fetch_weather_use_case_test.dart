@@ -222,5 +222,67 @@ void main() {
     // Result.failure(error)が返ってきた時に、WeatherPageUiStateProviderの
     // state(WeatherPageUiState)を受け取ったエラーメッセージの値
     // （'例外が発生しました。'）で更新する
+    test('''
+      When Result.failure('例外が発生しました。') is returned,
+      update WeatherPageUiStateProvider state with the error message received
+    ''', () {
+      // Arrange
+      final mockRepository = MockWeatherRepository();
+      when(mockRepository.getWeather(any)).thenReturn(
+        const Result.failure(ErrorMessage.other),
+      );
+
+      final container = ProviderContainer(
+        overrides: [
+          fetchWeatherUseCaseProvider.overrideWith(
+            (ref) => FetchWeatherUseCase(mockRepository, ref),
+          ),
+        ],
+      );
+
+      final listener = Listener<WeatherPageUiState>();
+
+      container.listen<WeatherPageUiState>(
+        weatherPageUiStateProvider,
+        listener,
+        fireImmediately: true,
+      );
+
+      verify(listener(null, const WeatherPageUiState.init())).called(1);
+      verifyNoMoreInteractions(listener);
+
+      expect(
+        container.read(weatherPageUiStateProvider),
+        const WeatherPageUiState.init(),
+      );
+
+      // Act
+      container.read(fetchWeatherUseCaseProvider).fetchWeather(
+            WeatherForecastTarget(
+              area: 'Tokyo',
+              date: DateTime.now(),
+            ),
+          );
+
+      // Assert
+      expect(
+        container.read(weatherPageUiStateProvider),
+        isA<WeatherPageUiStateFailure>(),
+      );
+
+      verify(
+        listener(
+          const WeatherPageUiState.init(),
+          argThat(
+            isA<WeatherPageUiStateFailure>().having(
+              (failure) => failure.errorMessage,
+              'errorMessage',
+              ErrorMessage.other,
+            ),
+          ),
+        ),
+      ).called(1);
+      verifyNoMoreInteractions(listener);
+    });
   });
 }
