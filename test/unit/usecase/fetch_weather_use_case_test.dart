@@ -22,6 +22,9 @@ class Listener<T> extends Mock {
 @GenerateNiceMocks([MockSpec<WeatherRepository>()])
 void main() {
   group('FetchWeatherUseCase', () {
+    // Arrange
+    final mockRepository = MockWeatherRepository();
+
     // 成功ケース
     // repository.getWeatherからResult.success（weatherInfo）を受け取ったときに、
     // weatherInfoStateProviderのstateを受け取ったweatherInfoの値に更新する
@@ -33,7 +36,6 @@ void main() {
       ''',
       () {
         // Arrange
-        final mockRepository = MockWeatherRepository();
         const weatherInfo = WeatherInfo(
           weatherCondition: WeatherCondition.sunny,
           maxTemperature: 20,
