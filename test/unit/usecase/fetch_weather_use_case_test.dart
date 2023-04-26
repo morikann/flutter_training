@@ -121,16 +121,27 @@ void main() {
         ],
       );
 
-      final listener = Listener<WeatherPageUiState>();
-
+      final weatherPageUiStateListener = Listener<WeatherPageUiState>();
       container.listen<WeatherPageUiState>(
         weatherPageUiStateProvider,
-        listener,
+        weatherPageUiStateListener,
         fireImmediately: true,
       );
 
-      verify(listener(null, const WeatherPageUiState.initial())).called(1);
-      verifyNoMoreInteractions(listener);
+      final weatherInfoListener = Listener<WeatherInfo?>();
+      container.listen<WeatherInfo?>(
+        weatherInfoStateProvider,
+        weatherInfoListener,
+        fireImmediately: true,
+      );
+
+      verify(
+        weatherPageUiStateListener(
+          null,
+          const WeatherPageUiState.initial(),
+        ),
+      ).called(1);
+      verifyNoMoreInteractions(weatherPageUiStateListener);
 
       expect(
         container.read(weatherPageUiStateProvider),
@@ -153,7 +164,7 @@ void main() {
       );
 
       verify(
-        listener(
+        weatherPageUiStateListener(
           const WeatherPageUiState.initial(),
           argThat(
             isA<WeatherPageUiFailureState>().having(
@@ -164,7 +175,12 @@ void main() {
           ),
         ),
       ).called(1);
-      verifyNoMoreInteractions(listener);
+      verifyNoMoreInteractions(weatherPageUiStateListener);
+
+      verify(
+        weatherInfoListener(null, null),
+      ).called(1);
+      verifyNoMoreInteractions(weatherInfoListener);
     });
 
     // 失敗ケース2
@@ -189,16 +205,27 @@ void main() {
         ],
       );
 
-      final listener = Listener<WeatherPageUiState>();
-
+      final weatherPageUiStateListener = Listener<WeatherPageUiState>();
       container.listen<WeatherPageUiState>(
         weatherPageUiStateProvider,
-        listener,
+        weatherPageUiStateListener,
         fireImmediately: true,
       );
 
-      verify(listener(null, const WeatherPageUiState.initial())).called(1);
-      verifyNoMoreInteractions(listener);
+      final weatherInfoListener = Listener<WeatherInfo?>();
+      container.listen<WeatherInfo?>(
+        weatherInfoStateProvider,
+        weatherInfoListener,
+        fireImmediately: true,
+      );
+
+      verify(
+        weatherPageUiStateListener(
+          null,
+          const WeatherPageUiState.initial(),
+        ),
+      ).called(1);
+      verifyNoMoreInteractions(weatherPageUiStateListener);
 
       expect(
         container.read(weatherPageUiStateProvider),
@@ -220,7 +247,7 @@ void main() {
       );
 
       verify(
-        listener(
+        weatherPageUiStateListener(
           const WeatherPageUiState.initial(),
           argThat(
             isA<WeatherPageUiFailureState>().having(
@@ -231,7 +258,12 @@ void main() {
           ),
         ),
       ).called(1);
-      verifyNoMoreInteractions(listener);
+      verifyNoMoreInteractions(weatherPageUiStateListener);
+
+      verify(
+        weatherInfoListener(null, null),
+      ).called(1);
+      verifyNoMoreInteractions(weatherInfoListener);
     });
 
     // 失敗ケース3
@@ -256,16 +288,27 @@ void main() {
         ],
       );
 
-      final listener = Listener<WeatherPageUiState>();
-
+      final weatherPageUiStateListener = Listener<WeatherPageUiState>();
       container.listen<WeatherPageUiState>(
         weatherPageUiStateProvider,
-        listener,
+        weatherPageUiStateListener,
         fireImmediately: true,
       );
 
-      verify(listener(null, const WeatherPageUiState.initial())).called(1);
-      verifyNoMoreInteractions(listener);
+      final weatherInfoListener = Listener<WeatherInfo?>();
+      container.listen<WeatherInfo?>(
+        weatherInfoStateProvider,
+        weatherInfoListener,
+        fireImmediately: true,
+      );
+
+      verify(
+        weatherPageUiStateListener(
+          null,
+          const WeatherPageUiState.initial(),
+        ),
+      ).called(1);
+      verifyNoMoreInteractions(weatherPageUiStateListener);
 
       expect(
         container.read(weatherPageUiStateProvider),
@@ -287,7 +330,7 @@ void main() {
       );
 
       verify(
-        listener(
+        weatherPageUiStateListener(
           const WeatherPageUiState.initial(),
           argThat(
             isA<WeatherPageUiFailureState>().having(
@@ -298,7 +341,10 @@ void main() {
           ),
         ),
       ).called(1);
-      verifyNoMoreInteractions(listener);
+      verifyNoMoreInteractions(weatherPageUiStateListener);
+
+      verify(weatherInfoListener(null, null)).called(1);
+      verifyNoMoreInteractions(weatherInfoListener);
     });
   });
 }
