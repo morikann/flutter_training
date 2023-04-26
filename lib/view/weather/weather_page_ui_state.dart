@@ -5,12 +5,12 @@ part 'weather_page_ui_state.freezed.dart';
 
 /// WeatherPageの状態を返すプロバイダ
 final weatherPageUiStateProvider = StateProvider((ref) {
-  return const WeatherPageUiState.init();
+  return const WeatherPageUiState.initial();
 });
 
 @unfreezed
 class WeatherPageUiState with _$WeatherPageUiState {
-  const factory WeatherPageUiState.init() = Init; // こちらも
+  const factory WeatherPageUiState.initial() = WeatherPageUiInitialState;
   factory WeatherPageUiState.failure(String errorMessage) =
-      WeatherPageUiStateFailure;
+      WeatherPageUiFailureState;
 }

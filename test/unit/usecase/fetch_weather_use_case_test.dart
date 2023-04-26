@@ -113,12 +113,12 @@ void main() {
         fireImmediately: true,
       );
 
-      verify(listener(null, const WeatherPageUiState.init())).called(1);
+      verify(listener(null, const WeatherPageUiState.initial())).called(1);
       verifyNoMoreInteractions(listener);
 
       expect(
         container.read(weatherPageUiStateProvider),
-        const WeatherPageUiState.init(),
+        const WeatherPageUiState.initial(),
       );
 
       // Act
@@ -133,14 +133,14 @@ void main() {
       // WeatherPageUiStateはMutableなオブジェクトなので、オブジェクトではなく、型が等しいかテスト
       expect(
         container.read(weatherPageUiStateProvider),
-        isA<WeatherPageUiStateFailure>(),
+        isA<WeatherPageUiFailureState>(),
       );
 
       verify(
         listener(
-          const WeatherPageUiState.init(),
+          const WeatherPageUiState.initial(),
           argThat(
-            isA<WeatherPageUiStateFailure>().having(
+            isA<WeatherPageUiFailureState>().having(
               (failure) => failure.errorMessage,
               'errorMessage',
               ErrorMessage.invalidParameter,
@@ -181,12 +181,12 @@ void main() {
         fireImmediately: true,
       );
 
-      verify(listener(null, const WeatherPageUiState.init())).called(1);
+      verify(listener(null, const WeatherPageUiState.initial())).called(1);
       verifyNoMoreInteractions(listener);
 
       expect(
         container.read(weatherPageUiStateProvider),
-        const WeatherPageUiState.init(),
+        const WeatherPageUiState.initial(),
       );
 
       // Act
@@ -200,14 +200,14 @@ void main() {
       // Assert
       expect(
         container.read(weatherPageUiStateProvider),
-        isA<WeatherPageUiStateFailure>(),
+        isA<WeatherPageUiFailureState>(),
       );
 
       verify(
         listener(
-          const WeatherPageUiState.init(),
+          const WeatherPageUiState.initial(),
           argThat(
-            isA<WeatherPageUiStateFailure>().having(
+            isA<WeatherPageUiFailureState>().having(
               (failure) => failure.errorMessage,
               'errorMessage',
               ErrorMessage.unknown,
@@ -248,12 +248,12 @@ void main() {
         fireImmediately: true,
       );
 
-      verify(listener(null, const WeatherPageUiState.init())).called(1);
+      verify(listener(null, const WeatherPageUiState.initial())).called(1);
       verifyNoMoreInteractions(listener);
 
       expect(
         container.read(weatherPageUiStateProvider),
-        const WeatherPageUiState.init(),
+        const WeatherPageUiState.initial(),
       );
 
       // Act
@@ -267,14 +267,14 @@ void main() {
       // Assert
       expect(
         container.read(weatherPageUiStateProvider),
-        isA<WeatherPageUiStateFailure>(),
+        isA<WeatherPageUiFailureState>(),
       );
 
       verify(
         listener(
-          const WeatherPageUiState.init(),
+          const WeatherPageUiState.initial(),
           argThat(
-            isA<WeatherPageUiStateFailure>().having(
+            isA<WeatherPageUiFailureState>().having(
               (failure) => failure.errorMessage,
               'errorMessage',
               ErrorMessage.other,
