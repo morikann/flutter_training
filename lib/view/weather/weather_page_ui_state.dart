@@ -10,6 +10,7 @@ final weatherPageUiStateProvider = StateProvider((ref) {
 
 @unfreezed
 class WeatherPageUiState with _$WeatherPageUiState {
-  const factory WeatherPageUiState.init() = Init;
-  factory WeatherPageUiState.failure(String errorMessage) = Failure;
+  const factory WeatherPageUiState.init() = Init; // こちらも
+  factory WeatherPageUiState.failure(String errorMessage) =
+      WeatherPageUiStateFailure;
 }

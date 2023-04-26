@@ -38,19 +38,19 @@ mixin _$WeatherPageUiState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
-    required TResult Function(Failure value) failure,
+    required TResult Function(WeatherPageUiStateFailure value) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
-    TResult? Function(Failure value)? failure,
+    TResult? Function(WeatherPageUiStateFailure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
-    TResult Function(Failure value)? failure,
+    TResult Function(WeatherPageUiStateFailure value)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -133,7 +133,7 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
-    required TResult Function(Failure value) failure,
+    required TResult Function(WeatherPageUiStateFailure value) failure,
   }) {
     return init(this);
   }
@@ -142,7 +142,7 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
-    TResult? Function(Failure value)? failure,
+    TResult? Function(WeatherPageUiStateFailure value)? failure,
   }) {
     return init?.call(this);
   }
@@ -151,7 +151,7 @@ class _$Init implements Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
-    TResult Function(Failure value)? failure,
+    TResult Function(WeatherPageUiStateFailure value)? failure,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -166,18 +166,21 @@ abstract class Init implements WeatherPageUiState {
 }
 
 /// @nodoc
-abstract class _$$FailureCopyWith<$Res> {
-  factory _$$FailureCopyWith(_$Failure value, $Res Function(_$Failure) then) =
-      __$$FailureCopyWithImpl<$Res>;
+abstract class _$$WeatherPageUiStateFailureCopyWith<$Res> {
+  factory _$$WeatherPageUiStateFailureCopyWith(
+          _$WeatherPageUiStateFailure value,
+          $Res Function(_$WeatherPageUiStateFailure) then) =
+      __$$WeatherPageUiStateFailureCopyWithImpl<$Res>;
   @useResult
   $Res call({String errorMessage});
 }
 
 /// @nodoc
-class __$$FailureCopyWithImpl<$Res>
-    extends _$WeatherPageUiStateCopyWithImpl<$Res, _$Failure>
-    implements _$$FailureCopyWith<$Res> {
-  __$$FailureCopyWithImpl(_$Failure _value, $Res Function(_$Failure) _then)
+class __$$WeatherPageUiStateFailureCopyWithImpl<$Res>
+    extends _$WeatherPageUiStateCopyWithImpl<$Res, _$WeatherPageUiStateFailure>
+    implements _$$WeatherPageUiStateFailureCopyWith<$Res> {
+  __$$WeatherPageUiStateFailureCopyWithImpl(_$WeatherPageUiStateFailure _value,
+      $Res Function(_$WeatherPageUiStateFailure) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -185,7 +188,7 @@ class __$$FailureCopyWithImpl<$Res>
   $Res call({
     Object? errorMessage = null,
   }) {
-    return _then(_$Failure(
+    return _then(_$WeatherPageUiStateFailure(
       null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -196,8 +199,8 @@ class __$$FailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Failure implements Failure {
-  _$Failure(this.errorMessage);
+class _$WeatherPageUiStateFailure implements WeatherPageUiStateFailure {
+  _$WeatherPageUiStateFailure(this.errorMessage);
 
   @override
   String errorMessage;
@@ -210,8 +213,9 @@ class _$Failure implements Failure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$FailureCopyWith<_$Failure> get copyWith =>
-      __$$FailureCopyWithImpl<_$Failure>(this, _$identity);
+  _$$WeatherPageUiStateFailureCopyWith<_$WeatherPageUiStateFailure>
+      get copyWith => __$$WeatherPageUiStateFailureCopyWithImpl<
+          _$WeatherPageUiStateFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -248,7 +252,7 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
-    required TResult Function(Failure value) failure,
+    required TResult Function(WeatherPageUiStateFailure value) failure,
   }) {
     return failure(this);
   }
@@ -257,7 +261,7 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
-    TResult? Function(Failure value)? failure,
+    TResult? Function(WeatherPageUiStateFailure value)? failure,
   }) {
     return failure?.call(this);
   }
@@ -266,7 +270,7 @@ class _$Failure implements Failure {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
-    TResult Function(Failure value)? failure,
+    TResult Function(WeatherPageUiStateFailure value)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -276,12 +280,13 @@ class _$Failure implements Failure {
   }
 }
 
-abstract class Failure implements WeatherPageUiState {
-  factory Failure(String errorMessage) = _$Failure;
+abstract class WeatherPageUiStateFailure implements WeatherPageUiState {
+  factory WeatherPageUiStateFailure(String errorMessage) =
+      _$WeatherPageUiStateFailure;
 
   String get errorMessage;
   set errorMessage(String value);
   @JsonKey(ignore: true)
-  _$$FailureCopyWith<_$Failure> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$WeatherPageUiStateFailureCopyWith<_$WeatherPageUiStateFailure>
+      get copyWith => throw _privateConstructorUsedError;
 }
