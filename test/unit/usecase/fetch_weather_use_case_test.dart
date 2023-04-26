@@ -52,18 +52,24 @@ void main() {
             ),
           ],
         );
-        final listener = Listener<WeatherInfo?>();
-
-        // プロバイダを監視して変換を検出する
+        final weatherInfoListener = Listener<WeatherInfo?>();
+        // プロバイダを監視して変更を検出する
         container.listen<WeatherInfo?>(
           weatherInfoStateProvider,
-          listener,
+          weatherInfoListener,
+          fireImmediately: true,
+        );
+
+        final weatherPageUiStateListener = Listener<WeatherPageUiState>();
+        container.listen<WeatherPageUiState>(
+          weatherPageUiStateProvider,
+          weatherPageUiStateListener,
           fireImmediately: true,
         );
 
         // この時点で Listener はデフォルトの null が呼び出されているはず
-        verify(listener(null, null)).called(1);
-        verifyNoMoreInteractions(listener);
+        verify(weatherInfoListener(null, null)).called(1);
+        verifyNoMoreInteractions(weatherInfoListener);
 
         // weatherPageUiStateProviderの初期ステートがnullであることを確認
         expect(
@@ -81,8 +87,16 @@ void main() {
 
         // Assert
         expect(container.read(weatherInfoStateProvider), weatherInfo);
-        verify(listener(null, weatherInfo)).called(1);
-        verifyNoMoreInteractions(listener);
+        verify(weatherInfoListener(null, weatherInfo)).called(1);
+        verifyNoMoreInteractions(weatherInfoListener);
+
+        verify(
+          weatherPageUiStateListener(
+            null,
+            const WeatherPageUiState.initial(),
+          ),
+        ).called(1);
+        verifyNoMoreInteractions(weatherPageUiStateListener);
       },
     );
     // 失敗ケース1
