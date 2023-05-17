@@ -51,7 +51,7 @@ void main() {
     // Act, Assert
     expect(
       () => weatherDatastore.getWeather(target),
-      throwsA(isA<YumemiWeatherError>()),
+      throwsA(YumemiWeatherError.invalidParameter),
     );
   });
 
@@ -66,7 +66,7 @@ void main() {
     // Act, Assert
     expect(
       () => weatherDatastore.getWeather(target),
-      throwsA(isA<YumemiWeatherError>()),
+      throwsA(YumemiWeatherError.unknown),
     );
   });
 
