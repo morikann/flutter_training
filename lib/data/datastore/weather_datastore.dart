@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
@@ -24,10 +24,12 @@ class WeatherDatastore {
     return weatherData;
   }
 
+  @visibleForTesting
   String toJson(WeatherForecastTarget target) {
     return jsonEncode(target);
   }
 
+  @visibleForTesting
   Map<String, dynamic> toMap(String json) {
     return jsonDecode(json) as Map<String, dynamic>;
   }
