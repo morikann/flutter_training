@@ -21,330 +21,328 @@ class Listener<T> extends Mock {
 
 @GenerateNiceMocks([MockSpec<WeatherRepository>()])
 void main() {
-  group('FetchWeatherUseCase', () {
-    // Arrange
-    final mockRepository = MockWeatherRepository();
+  // Arrange
+  final mockRepository = MockWeatherRepository();
 
-    // 成功ケース
-    // repository.getWeatherからResult.success（weatherInfo）を受け取ったときに、
-    // weatherInfoStateProviderのstateを受け取ったweatherInfoの値に更新する
-    // weatherInfoStateProviderで管理しているstateの更新前後をテストする
-    test(
-      '''
+  // 成功ケース
+  // repository.getWeatherからResult.success（weatherInfo）を受け取ったときに、
+  // weatherInfoStateProviderのstateを受け取ったweatherInfoの値に更新する
+  // weatherInfoStateProviderで管理しているstateの更新前後をテストする
+  test(
+    '''
         When weatherInfo is successfully returned from Repository,
         update state of weatherInfoStateProvider
       ''',
-      () {
-        // Arrange
-        const weatherInfo = WeatherInfo(
-          weatherCondition: WeatherCondition.sunny,
-          maxTemperature: 20,
-          minTemperature: 10,
-        );
-        when(mockRepository.getWeather(any)).thenReturn(
-          const Result.success(weatherInfo),
-        );
+    () {
+      // Arrange
+      const weatherInfo = WeatherInfo(
+        weatherCondition: WeatherCondition.sunny,
+        maxTemperature: 20,
+        minTemperature: 10,
+      );
+      when(mockRepository.getWeather(any)).thenReturn(
+        const Result.success(weatherInfo),
+      );
 
-        final container = ProviderContainer(
-          overrides: [
-            fetchWeatherUseCaseProvider.overrideWith(
-              (ref) => FetchWeatherUseCase(mockRepository, ref),
-            ),
-          ],
-        );
-        final weatherInfoListener = Listener<WeatherInfo?>();
-        // プロバイダを監視して変更を検出する
-        container.listen<WeatherInfo?>(
-          weatherInfoStateProvider,
-          weatherInfoListener,
-          fireImmediately: true,
-        );
-
-        final weatherPageUiStateListener = Listener<WeatherPageUiState>();
-        container.listen<WeatherPageUiState>(
-          weatherPageUiStateProvider,
-          weatherPageUiStateListener,
-          fireImmediately: true,
-        );
-
-        // この時点で Listener はデフォルトの null が呼び出されているはず
-        verify(weatherInfoListener(null, null)).called(1);
-        verifyNoMoreInteractions(weatherInfoListener);
-
-        // weatherPageUiStateProviderの初期ステートがnullであることを確認
-        expect(
-          container.read(weatherInfoStateProvider),
-          null,
-        );
-
-        // Act
-        container.read(fetchWeatherUseCaseProvider).fetchWeather(
-              WeatherForecastTarget(
-                area: 'Tokyo',
-                date: DateTime.now(),
-              ),
-            );
-
-        // Assert
-        expect(container.read(weatherInfoStateProvider), weatherInfo);
-        verify(weatherInfoListener(null, weatherInfo)).called(1);
-        verifyNoMoreInteractions(weatherInfoListener);
-
-        verify(
-          weatherPageUiStateListener(
-            null,
-            const WeatherPageUiState.initial(),
+      final container = ProviderContainer(
+        overrides: [
+          fetchWeatherUseCaseProvider.overrideWith(
+            (ref) => FetchWeatherUseCase(mockRepository, ref),
           ),
-        ).called(1);
-        verifyNoMoreInteractions(weatherPageUiStateListener);
-      },
-    );
-    // 失敗ケース1
-    // Result.failure(error)が返ってきた時に、WeatherPageUiStateProviderの
-    // state(WeatherPageUiState)を受け取ったエラーメッセージの値
-    // （'パラメータが間違っています。'）で更新する
-    test('''
+        ],
+      );
+      final weatherInfoListener = Listener<WeatherInfo?>();
+      // プロバイダを監視して変更を検出する
+      container.listen<WeatherInfo?>(
+        weatherInfoStateProvider,
+        weatherInfoListener,
+        fireImmediately: true,
+      );
+
+      final weatherPageUiStateListener = Listener<WeatherPageUiState>();
+      container.listen<WeatherPageUiState>(
+        weatherPageUiStateProvider,
+        weatherPageUiStateListener,
+        fireImmediately: true,
+      );
+
+      // この時点で Listener はデフォルトの null が呼び出されているはず
+      verify(weatherInfoListener(null, null)).called(1);
+      verifyNoMoreInteractions(weatherInfoListener);
+
+      // weatherPageUiStateProviderの初期ステートがnullであることを確認
+      expect(
+        container.read(weatherInfoStateProvider),
+        null,
+      );
+
+      // Act
+      container.read(fetchWeatherUseCaseProvider).fetchWeather(
+            WeatherForecastTarget(
+              area: 'Tokyo',
+              date: DateTime.now(),
+            ),
+          );
+
+      // Assert
+      expect(container.read(weatherInfoStateProvider), weatherInfo);
+      verify(weatherInfoListener(null, weatherInfo)).called(1);
+      verifyNoMoreInteractions(weatherInfoListener);
+
+      verify(
+        weatherPageUiStateListener(
+          null,
+          const WeatherPageUiState.initial(),
+        ),
+      ).called(1);
+      verifyNoMoreInteractions(weatherPageUiStateListener);
+    },
+  );
+  // 失敗ケース1
+  // Result.failure(error)が返ってきた時に、WeatherPageUiStateProviderの
+  // state(WeatherPageUiState)を受け取ったエラーメッセージの値
+  // （'パラメータが間違っています。'）で更新する
+  test('''
       When Result.failure('パラメータが間違っています。') is returned,
       update WeatherPageUiStateProvider state with the error message received
     ''', () {
-      // Arrange
-      final mockRepository = MockWeatherRepository();
-      when(mockRepository.getWeather(any)).thenReturn(
-        const Result.failure(ErrorMessage.invalidParameter),
-      );
+    // Arrange
+    final mockRepository = MockWeatherRepository();
+    when(mockRepository.getWeather(any)).thenReturn(
+      const Result.failure(ErrorMessage.invalidParameter),
+    );
 
-      final container = ProviderContainer(
-        overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(mockRepository, ref),
-          ),
-        ],
-      );
-
-      final weatherPageUiStateListener = Listener<WeatherPageUiState>();
-      container.listen<WeatherPageUiState>(
-        weatherPageUiStateProvider,
-        weatherPageUiStateListener,
-        fireImmediately: true,
-      );
-
-      final weatherInfoListener = Listener<WeatherInfo?>();
-      container.listen<WeatherInfo?>(
-        weatherInfoStateProvider,
-        weatherInfoListener,
-        fireImmediately: true,
-      );
-
-      verify(
-        weatherPageUiStateListener(
-          null,
-          const WeatherPageUiState.initial(),
+    final container = ProviderContainer(
+      overrides: [
+        fetchWeatherUseCaseProvider.overrideWith(
+          (ref) => FetchWeatherUseCase(mockRepository, ref),
         ),
-      ).called(1);
-      verifyNoMoreInteractions(weatherPageUiStateListener);
+      ],
+    );
 
-      expect(
-        container.read(weatherPageUiStateProvider),
+    final weatherPageUiStateListener = Listener<WeatherPageUiState>();
+    container.listen<WeatherPageUiState>(
+      weatherPageUiStateProvider,
+      weatherPageUiStateListener,
+      fireImmediately: true,
+    );
+
+    final weatherInfoListener = Listener<WeatherInfo?>();
+    container.listen<WeatherInfo?>(
+      weatherInfoStateProvider,
+      weatherInfoListener,
+      fireImmediately: true,
+    );
+
+    verify(
+      weatherPageUiStateListener(
+        null,
         const WeatherPageUiState.initial(),
-      );
+      ),
+    ).called(1);
+    verifyNoMoreInteractions(weatherPageUiStateListener);
 
-      // Act
-      container.read(fetchWeatherUseCaseProvider).fetchWeather(
-            WeatherForecastTarget(
-              area: 'Tokyo',
-              date: DateTime.now(),
-            ),
-          );
+    expect(
+      container.read(weatherPageUiStateProvider),
+      const WeatherPageUiState.initial(),
+    );
 
-      // Assert
-      // WeatherPageUiStateはMutableなオブジェクトなので、オブジェクトではなく、型が等しいかテスト
-      expect(
-        container.read(weatherPageUiStateProvider),
-        isA<WeatherPageUiFailureState>(),
-      );
+    // Act
+    container.read(fetchWeatherUseCaseProvider).fetchWeather(
+          WeatherForecastTarget(
+            area: 'Tokyo',
+            date: DateTime.now(),
+          ),
+        );
 
-      verify(
-        weatherPageUiStateListener(
-          const WeatherPageUiState.initial(),
-          argThat(
-            isA<WeatherPageUiFailureState>().having(
-              (failure) => failure.errorMessage,
-              'errorMessage',
-              ErrorMessage.invalidParameter,
-            ),
+    // Assert
+    // WeatherPageUiStateはMutableなオブジェクトなので、オブジェクトではなく、型が等しいかテスト
+    expect(
+      container.read(weatherPageUiStateProvider),
+      isA<WeatherPageUiFailureState>(),
+    );
+
+    verify(
+      weatherPageUiStateListener(
+        const WeatherPageUiState.initial(),
+        argThat(
+          isA<WeatherPageUiFailureState>().having(
+            (failure) => failure.errorMessage,
+            'errorMessage',
+            ErrorMessage.invalidParameter,
           ),
         ),
-      ).called(1);
-      verifyNoMoreInteractions(weatherPageUiStateListener);
+      ),
+    ).called(1);
+    verifyNoMoreInteractions(weatherPageUiStateListener);
 
-      verify(
-        weatherInfoListener(null, null),
-      ).called(1);
-      verifyNoMoreInteractions(weatherInfoListener);
-    });
+    verify(
+      weatherInfoListener(null, null),
+    ).called(1);
+    verifyNoMoreInteractions(weatherInfoListener);
+  });
 
-    // 失敗ケース2
-    // Result.failure(error)が返ってきた時に、WeatherPageUiStateProviderの
-    // state(WeatherPageUiState)を受け取ったエラーメッセージの値
-    // （'予期せぬ不具合が発生しました。'）で更新する
-    test('''
+  // 失敗ケース2
+  // Result.failure(error)が返ってきた時に、WeatherPageUiStateProviderの
+  // state(WeatherPageUiState)を受け取ったエラーメッセージの値
+  // （'予期せぬ不具合が発生しました。'）で更新する
+  test('''
       When Result.failure('予期せぬ不具合が発生しました。') is returned,
       update WeatherPageUiStateProvider state with the error message received
     ''', () {
-      // Arrange
-      final mockRepository = MockWeatherRepository();
-      when(mockRepository.getWeather(any)).thenReturn(
-        const Result.failure(ErrorMessage.unknown),
-      );
+    // Arrange
+    final mockRepository = MockWeatherRepository();
+    when(mockRepository.getWeather(any)).thenReturn(
+      const Result.failure(ErrorMessage.unknown),
+    );
 
-      final container = ProviderContainer(
-        overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(mockRepository, ref),
-          ),
-        ],
-      );
-
-      final weatherPageUiStateListener = Listener<WeatherPageUiState>();
-      container.listen<WeatherPageUiState>(
-        weatherPageUiStateProvider,
-        weatherPageUiStateListener,
-        fireImmediately: true,
-      );
-
-      final weatherInfoListener = Listener<WeatherInfo?>();
-      container.listen<WeatherInfo?>(
-        weatherInfoStateProvider,
-        weatherInfoListener,
-        fireImmediately: true,
-      );
-
-      verify(
-        weatherPageUiStateListener(
-          null,
-          const WeatherPageUiState.initial(),
+    final container = ProviderContainer(
+      overrides: [
+        fetchWeatherUseCaseProvider.overrideWith(
+          (ref) => FetchWeatherUseCase(mockRepository, ref),
         ),
-      ).called(1);
-      verifyNoMoreInteractions(weatherPageUiStateListener);
+      ],
+    );
 
-      expect(
-        container.read(weatherPageUiStateProvider),
+    final weatherPageUiStateListener = Listener<WeatherPageUiState>();
+    container.listen<WeatherPageUiState>(
+      weatherPageUiStateProvider,
+      weatherPageUiStateListener,
+      fireImmediately: true,
+    );
+
+    final weatherInfoListener = Listener<WeatherInfo?>();
+    container.listen<WeatherInfo?>(
+      weatherInfoStateProvider,
+      weatherInfoListener,
+      fireImmediately: true,
+    );
+
+    verify(
+      weatherPageUiStateListener(
+        null,
         const WeatherPageUiState.initial(),
-      );
+      ),
+    ).called(1);
+    verifyNoMoreInteractions(weatherPageUiStateListener);
 
-      // Act
-      container.read(fetchWeatherUseCaseProvider).fetchWeather(
-            WeatherForecastTarget(
-              area: 'Tokyo',
-              date: DateTime.now(),
-            ),
-          );
+    expect(
+      container.read(weatherPageUiStateProvider),
+      const WeatherPageUiState.initial(),
+    );
 
-      // Assert
-      expect(
-        container.read(weatherPageUiStateProvider),
-        isA<WeatherPageUiFailureState>(),
-      );
+    // Act
+    container.read(fetchWeatherUseCaseProvider).fetchWeather(
+          WeatherForecastTarget(
+            area: 'Tokyo',
+            date: DateTime.now(),
+          ),
+        );
 
-      verify(
-        weatherPageUiStateListener(
-          const WeatherPageUiState.initial(),
-          argThat(
-            isA<WeatherPageUiFailureState>().having(
-              (failure) => failure.errorMessage,
-              'errorMessage',
-              ErrorMessage.unknown,
-            ),
+    // Assert
+    expect(
+      container.read(weatherPageUiStateProvider),
+      isA<WeatherPageUiFailureState>(),
+    );
+
+    verify(
+      weatherPageUiStateListener(
+        const WeatherPageUiState.initial(),
+        argThat(
+          isA<WeatherPageUiFailureState>().having(
+            (failure) => failure.errorMessage,
+            'errorMessage',
+            ErrorMessage.unknown,
           ),
         ),
-      ).called(1);
-      verifyNoMoreInteractions(weatherPageUiStateListener);
+      ),
+    ).called(1);
+    verifyNoMoreInteractions(weatherPageUiStateListener);
 
-      verify(
-        weatherInfoListener(null, null),
-      ).called(1);
-      verifyNoMoreInteractions(weatherInfoListener);
-    });
+    verify(
+      weatherInfoListener(null, null),
+    ).called(1);
+    verifyNoMoreInteractions(weatherInfoListener);
+  });
 
-    // 失敗ケース3
-    // Result.failure(error)が返ってきた時に、WeatherPageUiStateProviderの
-    // state(WeatherPageUiState)を受け取ったエラーメッセージの値
-    // （'例外が発生しました。'）で更新する
-    test('''
+  // 失敗ケース3
+  // Result.failure(error)が返ってきた時に、WeatherPageUiStateProviderの
+  // state(WeatherPageUiState)を受け取ったエラーメッセージの値
+  // （'例外が発生しました。'）で更新する
+  test('''
       When Result.failure('例外が発生しました。') is returned,
       update WeatherPageUiStateProvider state with the error message received
     ''', () {
-      // Arrange
-      final mockRepository = MockWeatherRepository();
-      when(mockRepository.getWeather(any)).thenReturn(
-        const Result.failure(ErrorMessage.other),
-      );
+    // Arrange
+    final mockRepository = MockWeatherRepository();
+    when(mockRepository.getWeather(any)).thenReturn(
+      const Result.failure(ErrorMessage.other),
+    );
 
-      final container = ProviderContainer(
-        overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(mockRepository, ref),
-          ),
-        ],
-      );
-
-      final weatherPageUiStateListener = Listener<WeatherPageUiState>();
-      container.listen<WeatherPageUiState>(
-        weatherPageUiStateProvider,
-        weatherPageUiStateListener,
-        fireImmediately: true,
-      );
-
-      final weatherInfoListener = Listener<WeatherInfo?>();
-      container.listen<WeatherInfo?>(
-        weatherInfoStateProvider,
-        weatherInfoListener,
-        fireImmediately: true,
-      );
-
-      verify(
-        weatherPageUiStateListener(
-          null,
-          const WeatherPageUiState.initial(),
+    final container = ProviderContainer(
+      overrides: [
+        fetchWeatherUseCaseProvider.overrideWith(
+          (ref) => FetchWeatherUseCase(mockRepository, ref),
         ),
-      ).called(1);
-      verifyNoMoreInteractions(weatherPageUiStateListener);
+      ],
+    );
 
-      expect(
-        container.read(weatherPageUiStateProvider),
+    final weatherPageUiStateListener = Listener<WeatherPageUiState>();
+    container.listen<WeatherPageUiState>(
+      weatherPageUiStateProvider,
+      weatherPageUiStateListener,
+      fireImmediately: true,
+    );
+
+    final weatherInfoListener = Listener<WeatherInfo?>();
+    container.listen<WeatherInfo?>(
+      weatherInfoStateProvider,
+      weatherInfoListener,
+      fireImmediately: true,
+    );
+
+    verify(
+      weatherPageUiStateListener(
+        null,
         const WeatherPageUiState.initial(),
-      );
+      ),
+    ).called(1);
+    verifyNoMoreInteractions(weatherPageUiStateListener);
 
-      // Act
-      container.read(fetchWeatherUseCaseProvider).fetchWeather(
-            WeatherForecastTarget(
-              area: 'Tokyo',
-              date: DateTime.now(),
-            ),
-          );
+    expect(
+      container.read(weatherPageUiStateProvider),
+      const WeatherPageUiState.initial(),
+    );
 
-      // Assert
-      expect(
-        container.read(weatherPageUiStateProvider),
-        isA<WeatherPageUiFailureState>(),
-      );
+    // Act
+    container.read(fetchWeatherUseCaseProvider).fetchWeather(
+          WeatherForecastTarget(
+            area: 'Tokyo',
+            date: DateTime.now(),
+          ),
+        );
 
-      verify(
-        weatherPageUiStateListener(
-          const WeatherPageUiState.initial(),
-          argThat(
-            isA<WeatherPageUiFailureState>().having(
-              (failure) => failure.errorMessage,
-              'errorMessage',
-              ErrorMessage.other,
-            ),
+    // Assert
+    expect(
+      container.read(weatherPageUiStateProvider),
+      isA<WeatherPageUiFailureState>(),
+    );
+
+    verify(
+      weatherPageUiStateListener(
+        const WeatherPageUiState.initial(),
+        argThat(
+          isA<WeatherPageUiFailureState>().having(
+            (failure) => failure.errorMessage,
+            'errorMessage',
+            ErrorMessage.other,
           ),
         ),
-      ).called(1);
-      verifyNoMoreInteractions(weatherPageUiStateListener);
+      ),
+    ).called(1);
+    verifyNoMoreInteractions(weatherPageUiStateListener);
 
-      verify(weatherInfoListener(null, null)).called(1);
-      verifyNoMoreInteractions(weatherInfoListener);
-    });
+    verify(weatherInfoListener(null, null)).called(1);
+    verifyNoMoreInteractions(weatherInfoListener);
   });
 }
