@@ -1,3 +1,4 @@
+import 'package:flutter_training/common/constants/error_message.dart';
 import 'package:flutter_training/common/result.dart';
 import 'package:flutter_training/data/datastore/weather_datastore.dart';
 import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
@@ -25,12 +26,12 @@ class WeatherRepository {
     } on YumemiWeatherError catch (e) {
       switch (e) {
         case YumemiWeatherError.invalidParameter:
-          return const Result.failure('パラメータが間違っています。');
+          return const Result.failure(ErrorMessage.invalidParameter);
         case YumemiWeatherError.unknown:
-          return const Result.failure('予期せぬ不具合が発生しました。');
+          return const Result.failure(ErrorMessage.unknown);
       }
     } on Exception catch (_) {
-      return const Result.failure('例外が発生しました。');
+      return const Result.failure(ErrorMessage.other);
     }
   }
 }

@@ -11,3 +11,7 @@ pre-commit:
     analyzer:
       glob: "*.dart"
       run: fvm dart analyze --fatal-infos lib
+pre-push:
+  commands:
+    unit_test:
+      run: fvm flutter test
