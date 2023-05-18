@@ -159,7 +159,11 @@ void main() {
     // WeatherPageUiStateはMutableなオブジェクトなので、オブジェクトではなく、型が等しいかテスト
     expect(
       container.read(weatherPageUiStateProvider),
-      isA<WeatherPageUiFailureState>(),
+      isA<WeatherPageUiFailureState>().having(
+        (failure) => failure.errorMessage,
+        'errorMessage',
+        ErrorMessage.invalidParameter,
+      ),
     );
 
     verify(
@@ -242,7 +246,11 @@ void main() {
     // Assert
     expect(
       container.read(weatherPageUiStateProvider),
-      isA<WeatherPageUiFailureState>(),
+      isA<WeatherPageUiFailureState>().having(
+        (failure) => failure.errorMessage,
+        'errorMessage',
+        ErrorMessage.unknown,
+      ),
     );
 
     verify(
@@ -325,7 +333,11 @@ void main() {
     // Assert
     expect(
       container.read(weatherPageUiStateProvider),
-      isA<WeatherPageUiFailureState>(),
+      isA<WeatherPageUiFailureState>().having(
+        (failure) => failure.errorMessage,
+        'errorMessage',
+        ErrorMessage.other,
+      ),
     );
 
     verify(
