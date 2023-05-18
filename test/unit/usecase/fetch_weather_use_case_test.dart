@@ -51,6 +51,8 @@ void main() {
           ),
         ],
       );
+      addTearDown(container.dispose);
+
       final weatherInfoListener = Listener<WeatherInfo?>();
       // プロバイダを監視して変更を検出する
       container.listen<WeatherInfo?>(
@@ -119,6 +121,7 @@ void main() {
         ),
       ],
     );
+    addTearDown(container.dispose);
 
     final weatherPageUiStateListener = Listener<WeatherPageUiState>();
     container.listen<WeatherPageUiState>(
@@ -207,6 +210,7 @@ void main() {
         ),
       ],
     );
+    addTearDown(container.dispose);
 
     final weatherPageUiStateListener = Listener<WeatherPageUiState>();
     container.listen<WeatherPageUiState>(
@@ -294,6 +298,7 @@ void main() {
         ),
       ],
     );
+    addTearDown(container.dispose);
 
     final weatherPageUiStateListener = Listener<WeatherPageUiState>();
     container.listen<WeatherPageUiState>(
