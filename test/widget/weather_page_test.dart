@@ -171,11 +171,11 @@ void main() {
     expect(find.text('$maxTemperature ℃'), findsOneWidget);
   });
 
-  testWidgets('MaxTemperature is displayed', (tester) async {
+  testWidgets('MinTemperature is displayed', (tester) async {
     // Arrange
     final binding = TestWidgetsFlutterBinding.ensureInitialized();
     await binding.setSurfaceSize(const Size(1080, 1920));
-    const maxTemperature = 20;
+    const minTemperature = -20;
 
     await tester.pumpWidget(
       ProviderScope(
@@ -183,7 +183,7 @@ void main() {
           // ignore: scoped_providers_should_specify_dependencies
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
-              createMockWeaherRepository(maxTemperature: maxTemperature),
+              createMockWeaherRepository(maxTemperature: minTemperature),
               ref,
             ),
           )
@@ -200,6 +200,6 @@ void main() {
     await tester.pump();
 
     // Assert
-    expect(find.text('$maxTemperature ℃'), findsOneWidget);
+    expect(find.text('$minTemperature ℃'), findsOneWidget);
   });
 }
