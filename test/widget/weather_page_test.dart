@@ -72,4 +72,33 @@ void main() {
       expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
     },
   );
+
+  testWidgets('Cloudy image is displayed', (tester) async {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await binding.setSurfaceSize(const Size(1080, 1920));
+    const weatherCondition = WeatherCondition.cloudy;
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          // ignore: scoped_providers_should_specify_dependencies
+          fetchWeatherUseCaseProvider.overrideWith(
+            (ref) => FetchWeatherUseCase(
+              createMockWeaherRepository(weatherCondition),
+              ref,
+            ),
+          )
+        ],
+        child: const MaterialApp(
+          home: WeatherPage(),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Reload'));
+
+    await tester.pump();
+
+    expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
+  });
 }
