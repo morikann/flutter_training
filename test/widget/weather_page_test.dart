@@ -22,14 +22,16 @@ Finder findSvgImage(String assetName) {
   );
 }
 
-MockWeatherRepository createMockWeaherRepository(
-  WeatherCondition weatherCondition,
-) {
+MockWeatherRepository createMockWeaherRepository({
+  WeatherCondition weatherCondition = WeatherCondition.sunny,
+  int maxTemperature = 0,
+  int minTemperature = 0,
+}) {
   final mockRepository = MockWeatherRepository();
   final weatherInfo = WeatherInfo(
     weatherCondition: weatherCondition,
-    maxTemperature: 20,
-    minTemperature: 10,
+    maxTemperature: maxTemperature,
+    minTemperature: minTemperature,
   );
   when(mockRepository.getWeather(any)).thenReturn(
     Result.success(weatherInfo),
@@ -52,7 +54,7 @@ void main() {
             // ignore: scoped_providers_should_specify_dependencies
             fetchWeatherUseCaseProvider.overrideWith(
               (ref) => FetchWeatherUseCase(
-                createMockWeaherRepository(weatherCondition),
+                createMockWeaherRepository(),
                 ref,
               ),
             )
@@ -84,7 +86,7 @@ void main() {
           // ignore: scoped_providers_should_specify_dependencies
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
-              createMockWeaherRepository(weatherCondition),
+              createMockWeaherRepository(weatherCondition: weatherCondition),
               ref,
             ),
           )
@@ -113,7 +115,7 @@ void main() {
           // ignore: scoped_providers_should_specify_dependencies
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
-              createMockWeaherRepository(weatherCondition),
+              createMockWeaherRepository(weatherCondition: weatherCondition),
               ref,
             ),
           )
