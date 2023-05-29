@@ -76,6 +76,7 @@ void main() {
   );
 
   testWidgets('Cloudy image is displayed', (tester) async {
+    // Arrange
     final binding = TestWidgetsFlutterBinding.ensureInitialized();
     await binding.setSurfaceSize(const Size(1080, 1920));
     const weatherCondition = WeatherCondition.cloudy;
@@ -97,14 +98,17 @@ void main() {
       ),
     );
 
+    // Act
     await tester.tap(find.text('Reload'));
 
     await tester.pump();
 
+    // Assert
     expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
   });
 
   testWidgets('Rainy image is displayed', (tester) async {
+    // Arrange
     final binding = TestWidgetsFlutterBinding.ensureInitialized();
     await binding.setSurfaceSize(const Size(1080, 1920));
     const weatherCondition = WeatherCondition.rainy;
@@ -126,10 +130,44 @@ void main() {
       ),
     );
 
+    // Act
     await tester.tap(find.text('Reload'));
 
     await tester.pump();
 
+    // Assert
+    expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
+  });
+
+  testWidgets('MaxTemperature is displayed', (tester) async {
+    // Arrange
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await binding.setSurfaceSize(const Size(1080, 1920));
+    const weatherCondition = WeatherCondition.rainy;
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          // ignore: scoped_providers_should_specify_dependencies
+          fetchWeatherUseCaseProvider.overrideWith(
+            (ref) => FetchWeatherUseCase(
+              createMockWeaherRepository(maxTemperature: 20),
+              ref,
+            ),
+          )
+        ],
+        child: const MaterialApp(
+          home: WeatherPage(),
+        ),
+      ),
+    );
+
+    // Act
+    await tester.tap(find.text('Reload'));
+
+    await tester.pump();
+
+    // Assert
     expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
   });
 }
