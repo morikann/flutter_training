@@ -143,7 +143,7 @@ void main() {
     // Arrange
     final binding = TestWidgetsFlutterBinding.ensureInitialized();
     await binding.setSurfaceSize(const Size(1080, 1920));
-    const weatherCondition = WeatherCondition.rainy;
+    const maxTemperature = 20;
 
     await tester.pumpWidget(
       ProviderScope(
@@ -151,7 +151,7 @@ void main() {
           // ignore: scoped_providers_should_specify_dependencies
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
-              createMockWeaherRepository(maxTemperature: 20),
+              createMockWeaherRepository(maxTemperature: maxTemperature),
               ref,
             ),
           )
@@ -168,6 +168,38 @@ void main() {
     await tester.pump();
 
     // Assert
-    expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
+    expect(find.text('$maxTemperature ℃'), findsOneWidget);
+  });
+
+  testWidgets('MaxTemperature is displayed', (tester) async {
+    // Arrange
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await binding.setSurfaceSize(const Size(1080, 1920));
+    const maxTemperature = 20;
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          // ignore: scoped_providers_should_specify_dependencies
+          fetchWeatherUseCaseProvider.overrideWith(
+            (ref) => FetchWeatherUseCase(
+              createMockWeaherRepository(maxTemperature: maxTemperature),
+              ref,
+            ),
+          )
+        ],
+        child: const MaterialApp(
+          home: WeatherPage(),
+        ),
+      ),
+    );
+
+    // Act
+    await tester.tap(find.text('Reload'));
+
+    await tester.pump();
+
+    // Assert
+    expect(find.text('$maxTemperature ℃'), findsOneWidget);
   });
 }
