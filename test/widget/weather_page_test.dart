@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_training/common/constants/error_message.dart';
 import 'package:flutter_training/common/result.dart';
 import 'package:flutter_training/data/model/weather/weather_condition.dart';
 import 'package:flutter_training/data/model/weather/weather_info.dart';
@@ -201,5 +202,44 @@ void main() {
 
     // Assert
     expect(find.text('$minTemperature ℃'), findsOneWidget);
+  });
+
+  testWidgets('Dialog appears with a specific message', (tester) async {
+    // Arrange
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await binding.setSurfaceSize(const Size(1080, 1920));
+
+    final mockRepository = MockWeatherRepository();
+    when(mockRepository.getWeather(any)).thenReturn(
+      const Result.failure(ErrorMessage.invalidParameter),
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          // ignore: scoped_providers_should_specify_dependencies
+          fetchWeatherUseCaseProvider.overrideWith(
+            (ref) => FetchWeatherUseCase(
+              mockRepository,
+              ref,
+            ),
+          )
+        ],
+        child: const MaterialApp(
+          home: WeatherPage(),
+        ),
+      ),
+    );
+
+    // Act
+    await tester.tap(find.text('Reload'));
+
+    await tester.pump();
+
+    // Assert
+    expect(find.byType(AlertDialog), findsOneWidget);
+    expect(find.text('エラー'), findsOneWidget);
+    expect(find.text('OK'), findsOneWidget);
+    expect(find.text(ErrorMessage.invalidParameter), findsOneWidget);
   });
 }
