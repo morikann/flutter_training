@@ -113,7 +113,10 @@ void main() {
     expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
   });
 
-  testWidgets('Rainy image is displayed', (tester) async {
+  testWidgets('''
+      When weatherInfo containing WeatherCondition.rainy is returned from repository, 
+      display rainy image
+    ''', (tester) async {
     // Arrange
     const weatherCondition = WeatherCondition.rainy;
 
