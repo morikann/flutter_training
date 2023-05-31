@@ -12,6 +12,7 @@ import 'package:flutter_training/view/weather/weather_page.dart';
 import 'package:mockito/mockito.dart';
 
 import '../unit/usecase/fetch_weather_use_case_test.mocks.dart';
+import 'utils/device_size.dart';
 
 Finder findSvgImage(String assetName) {
   return find.byWidgetPredicate(
@@ -41,12 +42,13 @@ MockWeatherRepository createMockWeaherRepository({
 }
 
 void main() {
+  setUp(setUpDeviceSize);
+  tearDown(tearDownDeviceSize);
+
   testWidgets(
     'Sunny image is displayed',
     (tester) async {
       // Arrange
-      final binding = TestWidgetsFlutterBinding.ensureInitialized();
-      await binding.setSurfaceSize(const Size(1080, 1920));
       const weatherCondition = WeatherCondition.sunny;
 
       await tester.pumpWidget(
@@ -78,8 +80,6 @@ void main() {
 
   testWidgets('Cloudy image is displayed', (tester) async {
     // Arrange
-    final binding = TestWidgetsFlutterBinding.ensureInitialized();
-    await binding.setSurfaceSize(const Size(1080, 1920));
     const weatherCondition = WeatherCondition.cloudy;
 
     await tester.pumpWidget(
@@ -110,8 +110,6 @@ void main() {
 
   testWidgets('Rainy image is displayed', (tester) async {
     // Arrange
-    final binding = TestWidgetsFlutterBinding.ensureInitialized();
-    await binding.setSurfaceSize(const Size(1080, 1920));
     const weatherCondition = WeatherCondition.rainy;
 
     await tester.pumpWidget(
@@ -142,8 +140,6 @@ void main() {
 
   testWidgets('MaxTemperature is displayed', (tester) async {
     // Arrange
-    final binding = TestWidgetsFlutterBinding.ensureInitialized();
-    await binding.setSurfaceSize(const Size(1080, 1920));
     const maxTemperature = 20;
 
     await tester.pumpWidget(
@@ -174,8 +170,6 @@ void main() {
 
   testWidgets('MinTemperature is displayed', (tester) async {
     // Arrange
-    final binding = TestWidgetsFlutterBinding.ensureInitialized();
-    await binding.setSurfaceSize(const Size(1080, 1920));
     const minTemperature = -20;
 
     await tester.pumpWidget(
@@ -206,9 +200,6 @@ void main() {
 
   testWidgets('Dialog appears with a specific message', (tester) async {
     // Arrange
-    final binding = TestWidgetsFlutterBinding.ensureInitialized();
-    await binding.setSurfaceSize(const Size(1080, 1920));
-
     final mockRepository = MockWeatherRepository();
     when(mockRepository.getWeather(any)).thenReturn(
       const Result.failure(ErrorMessage.invalidParameter),
