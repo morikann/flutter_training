@@ -177,7 +177,10 @@ void main() {
     expect(find.text('$maxTemperature ℃'), findsOneWidget);
   });
 
-  testWidgets('MinTemperature is displayed', (tester) async {
+  testWidgets('''
+      When a weatherInfo containing minTemperature is returned from the repository, 
+      the text of the minTemeprature is displayed
+    ''', (tester) async {
     // Arrange
     const minTemperature = -20;
 
