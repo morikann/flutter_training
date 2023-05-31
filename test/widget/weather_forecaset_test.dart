@@ -21,4 +21,17 @@ void main() {
 
     expect(find.byType(Placeholder), findsOneWidget);
   });
+
+  testWidgets('If weatherInfo is null, two ** ℃ texts are displayed',
+      (tester) async {
+    await tester.pumpWidget(
+      const ProviderScope(
+        child: MaterialApp(
+          home: WeatherForecast(),
+        ),
+      ),
+    );
+
+    expect(find.text('** ℃'), findsNWidgets(2));
+  });
 }
