@@ -145,7 +145,10 @@ void main() {
     expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
   });
 
-  testWidgets('MaxTemperature is displayed', (tester) async {
+  testWidgets('''
+      When a weatherInfo containing maxTemperature is returned from the repository, 
+      the text of the maxTemeprature is displayed
+    ''', (tester) async {
     // Arrange
     const maxTemperature = 20;
 
