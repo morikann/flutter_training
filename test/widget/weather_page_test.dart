@@ -1,3 +1,4 @@
+// ignore_for_file: scoped_providers_should_specify_dependencies
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,7 +55,6 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            // ignore: scoped_providers_should_specify_dependencies
             fetchWeatherUseCaseProvider.overrideWith(
               (ref) => FetchWeatherUseCase(
                 createMockWeaherRepository(),
@@ -85,7 +85,6 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          // ignore: scoped_providers_should_specify_dependencies
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
               createMockWeaherRepository(weatherCondition: weatherCondition),
@@ -115,7 +114,6 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          // ignore: scoped_providers_should_specify_dependencies
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
               createMockWeaherRepository(weatherCondition: weatherCondition),
@@ -145,7 +143,6 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          // ignore: scoped_providers_should_specify_dependencies
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
               createMockWeaherRepository(maxTemperature: maxTemperature),
@@ -175,7 +172,6 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          // ignore: scoped_providers_should_specify_dependencies
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
               createMockWeaherRepository(maxTemperature: minTemperature),
@@ -208,7 +204,6 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          // ignore: scoped_providers_should_specify_dependencies
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
               mockRepository,
