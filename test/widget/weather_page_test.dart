@@ -47,7 +47,10 @@ void main() {
   tearDown(tearDownDeviceSize);
 
   testWidgets(
-    'Sunny image is displayed',
+    '''
+      When weatherInfo containing WeatherCondition.sunny is returned from repository, 
+      display sunny image
+    ''',
     (tester) async {
       // Arrange
       const weatherCondition = WeatherCondition.sunny;
