@@ -209,7 +209,10 @@ void main() {
     expect(find.text('$minTemperature ℃'), findsOneWidget);
   });
 
-  testWidgets('Dialog appears with a specific message', (tester) async {
+  testWidgets('''
+      When ErrorMessage.invalidParameter is returned from the repository, 
+      display an AlertDialog containing the message of ErrorMessage.invalidParameter
+    ''', (tester) async {
     // Arrange
     final mockRepository = MockWeatherRepository();
     when(mockRepository.getWeather(any)).thenReturn(
