@@ -81,7 +81,10 @@ void main() {
     },
   );
 
-  testWidgets('Cloudy image is displayed', (tester) async {
+  testWidgets('''
+      When weatherInfo containing WeatherCondition.cloudy is returned from repository, 
+      display cloudy image
+    ''', (tester) async {
     // Arrange
     const weatherCondition = WeatherCondition.cloudy;
 
