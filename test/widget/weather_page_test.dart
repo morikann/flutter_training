@@ -25,7 +25,7 @@ Finder findSvgImage(String assetName) {
   );
 }
 
-MockWeatherRepository createMockWeaherRepository({
+MockWeatherRepository createMockWeatherRepository({
   WeatherCondition weatherCondition = WeatherCondition.sunny,
   int maxTemperature = 0,
   int minTemperature = 0,
@@ -60,7 +60,7 @@ void main() {
           overrides: [
             fetchWeatherUseCaseProvider.overrideWith(
               (ref) => FetchWeatherUseCase(
-                createMockWeaherRepository(),
+                createMockWeatherRepository(),
                 ref,
               ),
             )
@@ -93,7 +93,7 @@ void main() {
         overrides: [
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
-              createMockWeaherRepository(weatherCondition: weatherCondition),
+              createMockWeatherRepository(weatherCondition: weatherCondition),
               ref,
             ),
           )
@@ -125,7 +125,7 @@ void main() {
         overrides: [
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
-              createMockWeaherRepository(weatherCondition: weatherCondition),
+              createMockWeatherRepository(weatherCondition: weatherCondition),
               ref,
             ),
           )
@@ -147,7 +147,7 @@ void main() {
 
   testWidgets('''
       When a weatherInfo containing maxTemperature is returned from the repository, 
-      the text of the maxTemeprature is displayed
+      the text of the maxTemperature is displayed
     ''', (tester) async {
     // Arrange
     const maxTemperature = 20;
@@ -157,7 +157,7 @@ void main() {
         overrides: [
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
-              createMockWeaherRepository(maxTemperature: maxTemperature),
+              createMockWeatherRepository(maxTemperature: maxTemperature),
               ref,
             ),
           )
@@ -179,7 +179,7 @@ void main() {
 
   testWidgets('''
       When a weatherInfo containing minTemperature is returned from the repository, 
-      the text of the minTemeprature is displayed
+      the text of the minTemperature is displayed
     ''', (tester) async {
     // Arrange
     const minTemperature = -20;
@@ -189,7 +189,7 @@ void main() {
         overrides: [
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
-              createMockWeaherRepository(maxTemperature: minTemperature),
+              createMockWeatherRepository(maxTemperature: minTemperature),
               ref,
             ),
           )
