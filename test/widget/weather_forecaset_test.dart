@@ -61,4 +61,29 @@ void main() {
     final textWidget = tester.firstWidget(maxTemperature) as Text;
     expect(textWidget.style!.color, Colors.red);
   });
+
+  testWidgets('The color of the minTemperature is Colors.blue', (tester) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherInfoStateProvider.overrideWith(
+            (ref) => const WeatherInfo(
+              weatherCondition: WeatherCondition.sunny,
+              maxTemperature: 20,
+              minTemperature: -10,
+            ),
+          ),
+        ],
+        child: const MaterialApp(
+          home: WeatherForecast(),
+        ),
+      ),
+    );
+
+    final maxTemperature = find.text('-10 ℃');
+    expect(maxTemperature, findsOneWidget);
+
+    final textWidget = tester.firstWidget(maxTemperature) as Text;
+    expect(textWidget.style!.color, Colors.blue);
+  });
 }
