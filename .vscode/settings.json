@@ -5,5 +5,10 @@
   },
   "files.watcherExclude": {
     "**/.fvm": true
-  }
+  },
+  "cSpell.words": [
+    "yumemi",
+    "usecase",
+    "riverpod",
+  ],
 }
