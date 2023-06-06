@@ -1,7 +1,6 @@
 // ignore_for_file: scoped_providers_should_specify_dependencies
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/common/constants/error_message.dart';
 import 'package:flutter_training/common/result.dart';
@@ -14,16 +13,7 @@ import 'package:mockito/mockito.dart';
 
 import '../unit/usecase/fetch_weather_use_case_test.mocks.dart';
 import 'utils/device_size.dart';
-
-Finder findSvgImage(String assetName) {
-  return find.byWidgetPredicate(
-    (widget) =>
-        widget is SvgPicture &&
-        (widget.bytesLoader as SvgAssetLoader) // Here!
-                .assetName ==
-            assetName,
-  );
-}
+import 'utils/svg_image.dart';
 
 MockWeatherRepository createMockWeatherRepository({
   WeatherCondition weatherCondition = WeatherCondition.sunny,
