@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_training/data/model/weather/weather_condition.dart';
 import 'package:flutter_training/data/model/weather/weather_info.dart';
 
 /// 天気予報の状態を返すプロバイダ
@@ -22,7 +23,7 @@ class WeatherForecast extends ConsumerWidget {
           child: weatherInfo == null
               ? const Placeholder()
               : SvgPicture.asset(
-                  'images/${weatherInfo.weatherCondition.name}.svg',
+                  weatherInfo.weatherCondition.svgImagePath,
                   semanticsLabel: '${weatherInfo.weatherCondition.name} image',
                 ),
         ),
@@ -58,4 +59,8 @@ class WeatherForecast extends ConsumerWidget {
       ],
     );
   }
+}
+
+extension WeatherConditionExtension on WeatherCondition {
+  String get svgImagePath => 'images/$name.svg';
 }
