@@ -11,6 +11,8 @@ final weatherPageUiStateProvider = StateProvider((ref) {
 @unfreezed
 class WeatherPageUiState with _$WeatherPageUiState {
   const factory WeatherPageUiState.initial() = WeatherPageUiInitialState;
+  const factory WeatherPageUiState.loading() = WeatherPageUiLoadingState;
+  const factory WeatherPageUiState.success() = WeatherPageUiSuccessState;
   factory WeatherPageUiState.failure(String errorMessage) =
       WeatherPageUiFailureState;
 }

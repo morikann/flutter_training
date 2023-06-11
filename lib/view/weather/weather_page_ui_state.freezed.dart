@@ -19,18 +19,24 @@ mixin _$WeatherPageUiState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
     required TResult Function(String errorMessage) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
     TResult? Function(String errorMessage)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
     TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) =>
@@ -38,18 +44,24 @@ mixin _$WeatherPageUiState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(WeatherPageUiInitialState value) initial,
+    required TResult Function(WeatherPageUiLoadingState value) loading,
+    required TResult Function(WeatherPageUiSuccessState value) success,
     required TResult Function(WeatherPageUiFailureState value) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(WeatherPageUiInitialState value)? initial,
+    TResult? Function(WeatherPageUiLoadingState value)? loading,
+    TResult? Function(WeatherPageUiSuccessState value)? success,
     TResult? Function(WeatherPageUiFailureState value)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(WeatherPageUiInitialState value)? initial,
+    TResult Function(WeatherPageUiLoadingState value)? loading,
+    TResult Function(WeatherPageUiSuccessState value)? success,
     TResult Function(WeatherPageUiFailureState value)? failure,
     required TResult orElse(),
   }) =>
@@ -105,6 +117,8 @@ class _$WeatherPageUiInitialState implements WeatherPageUiInitialState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
     required TResult Function(String errorMessage) failure,
   }) {
     return initial();
@@ -114,6 +128,8 @@ class _$WeatherPageUiInitialState implements WeatherPageUiInitialState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
     TResult? Function(String errorMessage)? failure,
   }) {
     return initial?.call();
@@ -123,6 +139,8 @@ class _$WeatherPageUiInitialState implements WeatherPageUiInitialState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
     TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) {
@@ -136,6 +154,8 @@ class _$WeatherPageUiInitialState implements WeatherPageUiInitialState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(WeatherPageUiInitialState value) initial,
+    required TResult Function(WeatherPageUiLoadingState value) loading,
+    required TResult Function(WeatherPageUiSuccessState value) success,
     required TResult Function(WeatherPageUiFailureState value) failure,
   }) {
     return initial(this);
@@ -145,6 +165,8 @@ class _$WeatherPageUiInitialState implements WeatherPageUiInitialState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(WeatherPageUiInitialState value)? initial,
+    TResult? Function(WeatherPageUiLoadingState value)? loading,
+    TResult? Function(WeatherPageUiSuccessState value)? success,
     TResult? Function(WeatherPageUiFailureState value)? failure,
   }) {
     return initial?.call(this);
@@ -154,6 +176,8 @@ class _$WeatherPageUiInitialState implements WeatherPageUiInitialState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(WeatherPageUiInitialState value)? initial,
+    TResult Function(WeatherPageUiLoadingState value)? loading,
+    TResult Function(WeatherPageUiSuccessState value)? success,
     TResult Function(WeatherPageUiFailureState value)? failure,
     required TResult orElse(),
   }) {
@@ -166,6 +190,218 @@ class _$WeatherPageUiInitialState implements WeatherPageUiInitialState {
 
 abstract class WeatherPageUiInitialState implements WeatherPageUiState {
   const factory WeatherPageUiInitialState() = _$WeatherPageUiInitialState;
+}
+
+/// @nodoc
+abstract class _$$WeatherPageUiLoadingStateCopyWith<$Res> {
+  factory _$$WeatherPageUiLoadingStateCopyWith(
+          _$WeatherPageUiLoadingState value,
+          $Res Function(_$WeatherPageUiLoadingState) then) =
+      __$$WeatherPageUiLoadingStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$WeatherPageUiLoadingStateCopyWithImpl<$Res>
+    extends _$WeatherPageUiStateCopyWithImpl<$Res, _$WeatherPageUiLoadingState>
+    implements _$$WeatherPageUiLoadingStateCopyWith<$Res> {
+  __$$WeatherPageUiLoadingStateCopyWithImpl(_$WeatherPageUiLoadingState _value,
+      $Res Function(_$WeatherPageUiLoadingState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$WeatherPageUiLoadingState implements WeatherPageUiLoadingState {
+  const _$WeatherPageUiLoadingState();
+
+  @override
+  String toString() {
+    return 'WeatherPageUiState.loading()';
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
+    required TResult Function(String errorMessage) failure,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
+    TResult? Function(String errorMessage)? failure,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
+    TResult Function(String errorMessage)? failure,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WeatherPageUiInitialState value) initial,
+    required TResult Function(WeatherPageUiLoadingState value) loading,
+    required TResult Function(WeatherPageUiSuccessState value) success,
+    required TResult Function(WeatherPageUiFailureState value) failure,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(WeatherPageUiInitialState value)? initial,
+    TResult? Function(WeatherPageUiLoadingState value)? loading,
+    TResult? Function(WeatherPageUiSuccessState value)? success,
+    TResult? Function(WeatherPageUiFailureState value)? failure,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WeatherPageUiInitialState value)? initial,
+    TResult Function(WeatherPageUiLoadingState value)? loading,
+    TResult Function(WeatherPageUiSuccessState value)? success,
+    TResult Function(WeatherPageUiFailureState value)? failure,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class WeatherPageUiLoadingState implements WeatherPageUiState {
+  const factory WeatherPageUiLoadingState() = _$WeatherPageUiLoadingState;
+}
+
+/// @nodoc
+abstract class _$$WeatherPageUiSuccessStateCopyWith<$Res> {
+  factory _$$WeatherPageUiSuccessStateCopyWith(
+          _$WeatherPageUiSuccessState value,
+          $Res Function(_$WeatherPageUiSuccessState) then) =
+      __$$WeatherPageUiSuccessStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$WeatherPageUiSuccessStateCopyWithImpl<$Res>
+    extends _$WeatherPageUiStateCopyWithImpl<$Res, _$WeatherPageUiSuccessState>
+    implements _$$WeatherPageUiSuccessStateCopyWith<$Res> {
+  __$$WeatherPageUiSuccessStateCopyWithImpl(_$WeatherPageUiSuccessState _value,
+      $Res Function(_$WeatherPageUiSuccessState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$WeatherPageUiSuccessState implements WeatherPageUiSuccessState {
+  const _$WeatherPageUiSuccessState();
+
+  @override
+  String toString() {
+    return 'WeatherPageUiState.success()';
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
+    required TResult Function(String errorMessage) failure,
+  }) {
+    return success();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
+    TResult? Function(String errorMessage)? failure,
+  }) {
+    return success?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
+    TResult Function(String errorMessage)? failure,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WeatherPageUiInitialState value) initial,
+    required TResult Function(WeatherPageUiLoadingState value) loading,
+    required TResult Function(WeatherPageUiSuccessState value) success,
+    required TResult Function(WeatherPageUiFailureState value) failure,
+  }) {
+    return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(WeatherPageUiInitialState value)? initial,
+    TResult? Function(WeatherPageUiLoadingState value)? loading,
+    TResult? Function(WeatherPageUiSuccessState value)? success,
+    TResult? Function(WeatherPageUiFailureState value)? failure,
+  }) {
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WeatherPageUiInitialState value)? initial,
+    TResult Function(WeatherPageUiLoadingState value)? loading,
+    TResult Function(WeatherPageUiSuccessState value)? success,
+    TResult Function(WeatherPageUiFailureState value)? failure,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class WeatherPageUiSuccessState implements WeatherPageUiState {
+  const factory WeatherPageUiSuccessState() = _$WeatherPageUiSuccessState;
 }
 
 /// @nodoc
@@ -224,6 +460,8 @@ class _$WeatherPageUiFailureState implements WeatherPageUiFailureState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
     required TResult Function(String errorMessage) failure,
   }) {
     return failure(errorMessage);
@@ -233,6 +471,8 @@ class _$WeatherPageUiFailureState implements WeatherPageUiFailureState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
     TResult? Function(String errorMessage)? failure,
   }) {
     return failure?.call(errorMessage);
@@ -242,6 +482,8 @@ class _$WeatherPageUiFailureState implements WeatherPageUiFailureState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
     TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) {
@@ -255,6 +497,8 @@ class _$WeatherPageUiFailureState implements WeatherPageUiFailureState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(WeatherPageUiInitialState value) initial,
+    required TResult Function(WeatherPageUiLoadingState value) loading,
+    required TResult Function(WeatherPageUiSuccessState value) success,
     required TResult Function(WeatherPageUiFailureState value) failure,
   }) {
     return failure(this);
@@ -264,6 +508,8 @@ class _$WeatherPageUiFailureState implements WeatherPageUiFailureState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(WeatherPageUiInitialState value)? initial,
+    TResult? Function(WeatherPageUiLoadingState value)? loading,
+    TResult? Function(WeatherPageUiSuccessState value)? success,
     TResult? Function(WeatherPageUiFailureState value)? failure,
   }) {
     return failure?.call(this);
@@ -273,6 +519,8 @@ class _$WeatherPageUiFailureState implements WeatherPageUiFailureState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(WeatherPageUiInitialState value)? initial,
+    TResult Function(WeatherPageUiLoadingState value)? loading,
+    TResult Function(WeatherPageUiSuccessState value)? success,
     TResult Function(WeatherPageUiFailureState value)? failure,
     required TResult orElse(),
   }) {
