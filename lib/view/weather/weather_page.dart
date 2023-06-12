@@ -70,6 +70,10 @@ class WeatherPage extends ConsumerWidget {
                         Expanded(
                           child: TextButton(
                             onPressed: () {
+                              ref
+                                  .read(fetchWeatherUseCaseProvider)
+                                  .startLoading();
+
                               // fetch weather data and update ui
                               ref
                                   .read(fetchWeatherUseCaseProvider)
