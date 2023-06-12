@@ -12,7 +12,7 @@ import 'package:flutter_training/view/weather/weather_page_ui_state.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'fetch_weather_use_case_test.mocks.dart';
+import 'weather_use_case_test.mocks.dart';
 
 // プロバイダによるListenerへの通知を追跡する
 class Listener<T> extends Mock {

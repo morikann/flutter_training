@@ -11,7 +11,7 @@ import 'package:flutter_training/view/weather/component/weather_forecast.dart';
 import 'package:flutter_training/view/weather/weather_page.dart';
 import 'package:mockito/mockito.dart';
 
-import '../unit/usecase/fetch_weather_use_case_test.mocks.dart';
+import '../unit/usecase/weather_use_case_test.mocks.dart';
 import 'utils/device_size.dart';
 import 'utils/svg_image.dart';
 
