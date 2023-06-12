@@ -261,4 +261,48 @@ void main() {
 
     await tearDownDeviceSize(binding);
   });
+
+  testWidgets('show CircularProgressIndicator during fetching data',
+      (tester) async {
+    // Arrange
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
+    final mockRepository = MockWeatherRepository();
+    when(mockRepository.getWeather(any)).thenAnswer((_) async {
+      // １秒間loadingIndicatorを表示する
+      await Future<void>.delayed(const Duration(seconds: 1));
+      return const Result.failure(ErrorMessage.invalidParameter);
+    });
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherUseCaseProvider.overrideWith(
+            (ref) => WeatherUseCase(
+              mockRepository,
+              ref,
+            ),
+          )
+        ],
+        child: const MaterialApp(
+          home: WeatherPage(),
+        ),
+      ),
+    );
+
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+
+    // Act
+    await tester.tap(find.text('Reload'));
+
+    await tester.pump(const Duration(microseconds: 500));
+
+    // Assert
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+    // timerがpending状態だとエラーが起きるのでpumpAndSettleでフレーム生成を終了させる
+    await tester.pumpAndSettle();
+    // teardown
+    await tearDownDeviceSize(binding);
+  });
 }
