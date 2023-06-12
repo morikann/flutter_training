@@ -33,15 +33,15 @@ void main() {
         When weatherInfo is successfully returned from Repository,
         update state of weatherInfoStateProvider
       ''',
-    () {
+    () async {
       // Arrange
       const weatherInfo = WeatherInfo(
         weatherCondition: WeatherCondition.sunny,
         maxTemperature: 20,
         minTemperature: 10,
       );
-      when(mockRepository.getWeather(any)).thenReturn(
-        const Result.success(weatherInfo),
+      when(mockRepository.getWeather(any)).thenAnswer(
+        (_) async => const Result.success(weatherInfo),
       );
 
       final container = ProviderContainer(
@@ -79,7 +79,7 @@ void main() {
       );
 
       // Act
-      container.read(fetchWeatherUseCaseProvider).fetchWeather(
+      await container.read(fetchWeatherUseCaseProvider).fetchWeather(
             WeatherForecastTarget(
               area: 'Tokyo',
               date: DateTime.now(),
@@ -91,12 +91,16 @@ void main() {
       verify(weatherInfoListener(null, weatherInfo)).called(1);
       verifyNoMoreInteractions(weatherInfoListener);
 
-      verify(
+      verifyInOrder([
         weatherPageUiStateListener(
           null,
           const WeatherPageUiState.initial(),
         ),
-      ).called(1);
+        weatherPageUiStateListener(
+          const WeatherPageUiState.initial(),
+          const WeatherPageUiState.success(),
+        ),
+      ]);
       verifyNoMoreInteractions(weatherPageUiStateListener);
     },
   );
@@ -107,11 +111,11 @@ void main() {
   test('''
       When Result.failure('パラメータが間違っています。') is returned,
       update WeatherPageUiStateProvider state with the error message received
-    ''', () {
+    ''', () async {
     // Arrange
     final mockRepository = MockWeatherRepository();
-    when(mockRepository.getWeather(any)).thenReturn(
-      const Result.failure(ErrorMessage.invalidParameter),
+    when(mockRepository.getWeather(any)).thenAnswer(
+      (_) async => const Result.failure(ErrorMessage.invalidParameter),
     );
 
     final container = ProviderContainer(
@@ -151,7 +155,7 @@ void main() {
     );
 
     // Act
-    container.read(fetchWeatherUseCaseProvider).fetchWeather(
+    await container.read(fetchWeatherUseCaseProvider).fetchWeather(
           WeatherForecastTarget(
             area: 'Tokyo',
             date: DateTime.now(),
@@ -196,11 +200,11 @@ void main() {
   test('''
       When Result.failure('予期せぬ不具合が発生しました。') is returned,
       update WeatherPageUiStateProvider state with the error message received
-    ''', () {
+    ''', () async {
     // Arrange
     final mockRepository = MockWeatherRepository();
-    when(mockRepository.getWeather(any)).thenReturn(
-      const Result.failure(ErrorMessage.unknown),
+    when(mockRepository.getWeather(any)).thenAnswer(
+      (_) async => const Result.failure(ErrorMessage.unknown),
     );
 
     final container = ProviderContainer(
@@ -240,7 +244,7 @@ void main() {
     );
 
     // Act
-    container.read(fetchWeatherUseCaseProvider).fetchWeather(
+    await container.read(fetchWeatherUseCaseProvider).fetchWeather(
           WeatherForecastTarget(
             area: 'Tokyo',
             date: DateTime.now(),
@@ -284,11 +288,11 @@ void main() {
   test('''
       When Result.failure('例外が発生しました。') is returned,
       update WeatherPageUiStateProvider state with the error message received
-    ''', () {
+    ''', () async {
     // Arrange
     final mockRepository = MockWeatherRepository();
-    when(mockRepository.getWeather(any)).thenReturn(
-      const Result.failure(ErrorMessage.other),
+    when(mockRepository.getWeather(any)).thenAnswer(
+      (_) async => const Result.failure(ErrorMessage.other),
     );
 
     final container = ProviderContainer(
@@ -328,7 +332,7 @@ void main() {
     );
 
     // Act
-    container.read(fetchWeatherUseCaseProvider).fetchWeather(
+    await container.read(fetchWeatherUseCaseProvider).fetchWeather(
           WeatherForecastTarget(
             area: 'Tokyo',
             date: DateTime.now(),

@@ -3,11 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i5;
+
 import 'package:flutter_training/common/result.dart' as _i3;
 import 'package:flutter_training/data/datastore/weather_datastore.dart' as _i2;
 import 'package:flutter_training/data/model/weather/weather_forecast_target.dart'
-    as _i6;
-import 'package:flutter_training/data/model/weather/weather_info.dart' as _i5;
+    as _i7;
+import 'package:flutter_training/data/model/weather/weather_info.dart' as _i6;
 import 'package:flutter_training/data/repository/weather_repository.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
@@ -61,26 +63,29 @@ class MockWeatherRepository extends _i1.Mock implements _i4.WeatherRepository {
         ),
       ) as _i2.WeatherDatastore);
   @override
-  _i3.Result<_i5.WeatherInfo, String> getWeather(
-          _i6.WeatherForecastTarget? target) =>
+  _i5.Future<_i3.Result<_i6.WeatherInfo, String>> getWeather(
+          _i7.WeatherForecastTarget? target) =>
       (super.noSuchMethod(
         Invocation.method(
           #getWeather,
           [target],
         ),
-        returnValue: _FakeResult_1<_i5.WeatherInfo, String>(
+        returnValue: _i5.Future<_i3.Result<_i6.WeatherInfo, String>>.value(
+            _FakeResult_1<_i6.WeatherInfo, String>(
           this,
           Invocation.method(
             #getWeather,
             [target],
           ),
-        ),
-        returnValueForMissingStub: _FakeResult_1<_i5.WeatherInfo, String>(
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i3.Result<_i6.WeatherInfo, String>>.value(
+                _FakeResult_1<_i6.WeatherInfo, String>(
           this,
           Invocation.method(
             #getWeather,
             [target],
           ),
-        ),
-      ) as _i3.Result<_i5.WeatherInfo, String>);
+        )),
+      ) as _i5.Future<_i3.Result<_i6.WeatherInfo, String>>);
 }
