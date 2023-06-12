@@ -26,23 +26,22 @@ MockWeatherRepository createMockWeatherRepository({
     maxTemperature: maxTemperature,
     minTemperature: minTemperature,
   );
-  when(mockRepository.getWeather(any)).thenReturn(
-    Result.success(weatherInfo),
+  when(mockRepository.getWeather(any)).thenAnswer(
+    (_) async => Result.success(weatherInfo),
   );
   return mockRepository;
 }
 
 void main() {
-  setUp(setUpDeviceSize);
-  tearDown(tearDownDeviceSize);
-
   testWidgets(
     '''
-      When weatherInfo containing WeatherCondition.sunny is returned from repository, 
+      When weatherInfo containing WeatherCondition.sunny is returned from repository,
       display sunny image
     ''',
     (tester) async {
       // Arrange
+      final binding = TestWidgetsFlutterBinding.ensureInitialized();
+      await setUpDeviceSize(binding);
       const weatherCondition = WeatherCondition.sunny;
 
       await tester.pumpWidget(
@@ -64,18 +63,23 @@ void main() {
       // Act
       await tester.tap(find.text('Reload'));
 
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Assert
       expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
+
+      // tearDown
+      await tearDownDeviceSize(binding);
     },
   );
 
   testWidgets('''
-      When weatherInfo containing WeatherCondition.cloudy is returned from repository, 
+      When weatherInfo containing WeatherCondition.cloudy is returned from repository,
       display cloudy image
     ''', (tester) async {
     // Arrange
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
     const weatherCondition = WeatherCondition.cloudy;
 
     await tester.pumpWidget(
@@ -97,17 +101,22 @@ void main() {
     // Act
     await tester.tap(find.text('Reload'));
 
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Assert
     expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
+
+    // tearDown
+    await tearDownDeviceSize(binding);
   });
 
   testWidgets('''
-      When weatherInfo containing WeatherCondition.rainy is returned from repository, 
+      When weatherInfo containing WeatherCondition.rainy is returned from repository,
       display rainy image
     ''', (tester) async {
     // Arrange
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
     const weatherCondition = WeatherCondition.rainy;
 
     await tester.pumpWidget(
@@ -129,17 +138,22 @@ void main() {
     // Act
     await tester.tap(find.text('Reload'));
 
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Assert
     expect(findSvgImage(weatherCondition.svgImagePath), findsOneWidget);
+
+    // tearDown
+    await tearDownDeviceSize(binding);
   });
 
   testWidgets('''
-      When a weatherInfo containing maxTemperature is returned from the repository, 
+      When a weatherInfo containing maxTemperature is returned from the repository,
       the text of the maxTemperature is displayed
     ''', (tester) async {
     // Arrange
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
     const maxTemperature = 20;
 
     await tester.pumpWidget(
@@ -161,17 +175,22 @@ void main() {
     // Act
     await tester.tap(find.text('Reload'));
 
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Assert
     expect(find.text('$maxTemperature ℃'), findsOneWidget);
+
+    // tearDown
+    await tearDownDeviceSize(binding);
   });
 
   testWidgets('''
-      When a weatherInfo containing minTemperature is returned from the repository, 
+      When a weatherInfo containing minTemperature is returned from the repository,
       the text of the minTemperature is displayed
     ''', (tester) async {
     // Arrange
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
     const minTemperature = -20;
 
     await tester.pumpWidget(
@@ -193,20 +212,24 @@ void main() {
     // Act
     await tester.tap(find.text('Reload'));
 
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Assert
     expect(find.text('$minTemperature ℃'), findsOneWidget);
+    // tearDown
+    await tearDownDeviceSize(binding);
   });
 
   testWidgets('''
-      When ErrorMessage.invalidParameter is returned from the repository, 
+      When ErrorMessage.invalidParameter is returned from the repository,
       display an AlertDialog containing the message of ErrorMessage.invalidParameter
     ''', (tester) async {
     // Arrange
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
     final mockRepository = MockWeatherRepository();
-    when(mockRepository.getWeather(any)).thenReturn(
-      const Result.failure(ErrorMessage.invalidParameter),
+    when(mockRepository.getWeather(any)).thenAnswer(
+      (_) async => const Result.failure(ErrorMessage.invalidParameter),
     );
 
     await tester.pumpWidget(
@@ -228,12 +251,14 @@ void main() {
     // Act
     await tester.tap(find.text('Reload'));
 
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Assert
     expect(find.byType(AlertDialog), findsOneWidget);
     expect(find.text('エラー'), findsOneWidget);
     expect(find.text('OK'), findsOneWidget);
     expect(find.text(ErrorMessage.invalidParameter), findsOneWidget);
+
+    await tearDownDeviceSize(binding);
   });
 }
