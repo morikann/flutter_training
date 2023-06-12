@@ -6,7 +6,7 @@ import 'package:flutter_training/data/model/weather/weather_condition.dart';
 import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
 import 'package:flutter_training/data/model/weather/weather_info.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
-import 'package:flutter_training/data/usecase/fetch_weather_use_case.dart';
+import 'package:flutter_training/data/usecase/weather_use_case.dart';
 import 'package:flutter_training/view/weather/component/weather_forecast.dart';
 import 'package:flutter_training/view/weather/weather_page_ui_state.dart';
 import 'package:mockito/annotations.dart';
@@ -46,8 +46,8 @@ void main() {
 
       final container = ProviderContainer(
         overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(mockRepository, ref),
+          weatherUseCaseProvider.overrideWith(
+            (ref) => WeatherUseCase(mockRepository, ref),
           ),
         ],
       );
@@ -79,7 +79,7 @@ void main() {
       );
 
       // Act
-      await container.read(fetchWeatherUseCaseProvider).fetchWeather(
+      await container.read(weatherUseCaseProvider).fetchWeather(
             WeatherForecastTarget(
               area: 'Tokyo',
               date: DateTime.now(),
@@ -120,8 +120,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        fetchWeatherUseCaseProvider.overrideWith(
-          (ref) => FetchWeatherUseCase(mockRepository, ref),
+        weatherUseCaseProvider.overrideWith(
+          (ref) => WeatherUseCase(mockRepository, ref),
         ),
       ],
     );
@@ -155,7 +155,7 @@ void main() {
     );
 
     // Act
-    await container.read(fetchWeatherUseCaseProvider).fetchWeather(
+    await container.read(weatherUseCaseProvider).fetchWeather(
           WeatherForecastTarget(
             area: 'Tokyo',
             date: DateTime.now(),
@@ -209,8 +209,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        fetchWeatherUseCaseProvider.overrideWith(
-          (ref) => FetchWeatherUseCase(mockRepository, ref),
+        weatherUseCaseProvider.overrideWith(
+          (ref) => WeatherUseCase(mockRepository, ref),
         ),
       ],
     );
@@ -244,7 +244,7 @@ void main() {
     );
 
     // Act
-    await container.read(fetchWeatherUseCaseProvider).fetchWeather(
+    await container.read(weatherUseCaseProvider).fetchWeather(
           WeatherForecastTarget(
             area: 'Tokyo',
             date: DateTime.now(),
@@ -297,8 +297,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        fetchWeatherUseCaseProvider.overrideWith(
-          (ref) => FetchWeatherUseCase(mockRepository, ref),
+        weatherUseCaseProvider.overrideWith(
+          (ref) => WeatherUseCase(mockRepository, ref),
         ),
       ],
     );
@@ -332,7 +332,7 @@ void main() {
     );
 
     // Act
-    await container.read(fetchWeatherUseCaseProvider).fetchWeather(
+    await container.read(weatherUseCaseProvider).fetchWeather(
           WeatherForecastTarget(
             area: 'Tokyo',
             date: DateTime.now(),

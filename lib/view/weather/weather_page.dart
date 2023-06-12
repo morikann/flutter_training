@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
-import 'package:flutter_training/data/usecase/fetch_weather_use_case.dart';
+import 'package:flutter_training/data/usecase/weather_use_case.dart';
 import 'package:flutter_training/view/component/error_dialog.dart';
 import 'package:flutter_training/view/weather/component/weather_forecast.dart';
 import 'package:flutter_training/view/weather/weather_page_ui_state.dart';
@@ -70,14 +70,10 @@ class WeatherPage extends ConsumerWidget {
                         Expanded(
                           child: TextButton(
                             onPressed: () {
-                              ref
-                                  .read(fetchWeatherUseCaseProvider)
-                                  .startLoading();
+                              ref.read(weatherUseCaseProvider).startLoading();
 
                               // fetch weather data and update ui
-                              ref
-                                  .read(fetchWeatherUseCaseProvider)
-                                  .fetchWeather(
+                              ref.read(weatherUseCaseProvider).fetchWeather(
                                     WeatherForecastTarget(
                                       area: 'Tokyo',
                                       date: DateTime.now(),

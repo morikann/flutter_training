@@ -5,16 +5,16 @@ import 'package:flutter_training/view/weather/component/weather_forecast.dart';
 import 'package:flutter_training/view/weather/weather_page_ui_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'fetch_weather_use_case.g.dart';
+part 'weather_use_case.g.dart';
 
 @riverpod
-FetchWeatherUseCase fetchWeatherUseCase(FetchWeatherUseCaseRef ref) {
+WeatherUseCase weatherUseCase(WeatherUseCaseRef ref) {
   final weatherRepository = ref.watch(weatherRepositoryProvider);
-  return FetchWeatherUseCase(weatherRepository, ref);
+  return WeatherUseCase(weatherRepository, ref);
 }
 
-class FetchWeatherUseCase {
-  const FetchWeatherUseCase(this.repository, this.ref);
+class WeatherUseCase {
+  const WeatherUseCase(this.repository, this.ref);
 
   final WeatherRepository repository;
   final Ref ref;

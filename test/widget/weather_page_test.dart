@@ -6,7 +6,7 @@ import 'package:flutter_training/common/constants/error_message.dart';
 import 'package:flutter_training/common/result.dart';
 import 'package:flutter_training/data/model/weather/weather_condition.dart';
 import 'package:flutter_training/data/model/weather/weather_info.dart';
-import 'package:flutter_training/data/usecase/fetch_weather_use_case.dart';
+import 'package:flutter_training/data/usecase/weather_use_case.dart';
 import 'package:flutter_training/view/weather/component/weather_forecast.dart';
 import 'package:flutter_training/view/weather/weather_page.dart';
 import 'package:mockito/mockito.dart';
@@ -47,8 +47,8 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            fetchWeatherUseCaseProvider.overrideWith(
-              (ref) => FetchWeatherUseCase(
+            weatherUseCaseProvider.overrideWith(
+              (ref) => WeatherUseCase(
                 createMockWeatherRepository(),
                 ref,
               ),
@@ -85,8 +85,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(
+          weatherUseCaseProvider.overrideWith(
+            (ref) => WeatherUseCase(
               createMockWeatherRepository(weatherCondition: weatherCondition),
               ref,
             ),
@@ -122,8 +122,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(
+          weatherUseCaseProvider.overrideWith(
+            (ref) => WeatherUseCase(
               createMockWeatherRepository(weatherCondition: weatherCondition),
               ref,
             ),
@@ -159,8 +159,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(
+          weatherUseCaseProvider.overrideWith(
+            (ref) => WeatherUseCase(
               createMockWeatherRepository(maxTemperature: maxTemperature),
               ref,
             ),
@@ -196,8 +196,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(
+          weatherUseCaseProvider.overrideWith(
+            (ref) => WeatherUseCase(
               createMockWeatherRepository(maxTemperature: minTemperature),
               ref,
             ),
@@ -235,8 +235,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(
+          weatherUseCaseProvider.overrideWith(
+            (ref) => WeatherUseCase(
               mockRepository,
               ref,
             ),
