@@ -163,26 +163,15 @@ void main() {
         );
 
     // Assert
-    // WeatherPageUiStateはMutableなオブジェクトなので、オブジェクトではなく、型が等しいかテスト
     expect(
       container.read(weatherPageUiStateProvider),
-      isA<WeatherPageUiFailureState>().having(
-        (failure) => failure.errorMessage,
-        'errorMessage',
-        ErrorMessage.invalidParameter,
-      ),
+      const WeatherPageUiState.failure(ErrorMessage.invalidParameter),
     );
 
     verify(
       weatherPageUiStateListener(
         const WeatherPageUiState.initial(),
-        argThat(
-          isA<WeatherPageUiFailureState>().having(
-            (failure) => failure.errorMessage,
-            'errorMessage',
-            ErrorMessage.invalidParameter,
-          ),
-        ),
+        const WeatherPageUiState.failure(ErrorMessage.invalidParameter),
       ),
     ).called(1);
     verifyNoMoreInteractions(weatherPageUiStateListener);
@@ -254,23 +243,13 @@ void main() {
     // Assert
     expect(
       container.read(weatherPageUiStateProvider),
-      isA<WeatherPageUiFailureState>().having(
-        (failure) => failure.errorMessage,
-        'errorMessage',
-        ErrorMessage.unknown,
-      ),
+      const WeatherPageUiState.failure(ErrorMessage.unknown),
     );
 
     verify(
       weatherPageUiStateListener(
         const WeatherPageUiState.initial(),
-        argThat(
-          isA<WeatherPageUiFailureState>().having(
-            (failure) => failure.errorMessage,
-            'errorMessage',
-            ErrorMessage.unknown,
-          ),
-        ),
+        const WeatherPageUiState.failure(ErrorMessage.unknown),
       ),
     ).called(1);
     verifyNoMoreInteractions(weatherPageUiStateListener);
@@ -342,23 +321,13 @@ void main() {
     // Assert
     expect(
       container.read(weatherPageUiStateProvider),
-      isA<WeatherPageUiFailureState>().having(
-        (failure) => failure.errorMessage,
-        'errorMessage',
-        ErrorMessage.other,
-      ),
+      const WeatherPageUiState.failure(ErrorMessage.other),
     );
 
     verify(
       weatherPageUiStateListener(
         const WeatherPageUiState.initial(),
-        argThat(
-          isA<WeatherPageUiFailureState>().having(
-            (failure) => failure.errorMessage,
-            'errorMessage',
-            ErrorMessage.other,
-          ),
-        ),
+        const WeatherPageUiState.failure(ErrorMessage.other),
       ),
     ).called(1);
     verifyNoMoreInteractions(weatherPageUiStateListener);

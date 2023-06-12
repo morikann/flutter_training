@@ -114,6 +114,16 @@ class _$WeatherPageUiInitialState implements WeatherPageUiInitialState {
   }
 
   @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WeatherPageUiInitialState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -220,6 +230,16 @@ class _$WeatherPageUiLoadingState implements WeatherPageUiLoadingState {
   }
 
   @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WeatherPageUiLoadingState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -324,6 +344,16 @@ class _$WeatherPageUiSuccessState implements WeatherPageUiSuccessState {
   String toString() {
     return 'WeatherPageUiState.success()';
   }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WeatherPageUiSuccessState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
@@ -439,15 +469,27 @@ class __$$WeatherPageUiFailureStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$WeatherPageUiFailureState implements WeatherPageUiFailureState {
-  _$WeatherPageUiFailureState(this.errorMessage);
+  const _$WeatherPageUiFailureState(this.errorMessage);
 
   @override
-  String errorMessage;
+  final String errorMessage;
 
   @override
   String toString() {
     return 'WeatherPageUiState.failure(errorMessage: $errorMessage)';
   }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WeatherPageUiFailureState &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -532,11 +574,10 @@ class _$WeatherPageUiFailureState implements WeatherPageUiFailureState {
 }
 
 abstract class WeatherPageUiFailureState implements WeatherPageUiState {
-  factory WeatherPageUiFailureState(String errorMessage) =
+  const factory WeatherPageUiFailureState(final String errorMessage) =
       _$WeatherPageUiFailureState;
 
   String get errorMessage;
-  set errorMessage(String value);
   @JsonKey(ignore: true)
   _$$WeatherPageUiFailureStateCopyWith<_$WeatherPageUiFailureState>
       get copyWith => throw _privateConstructorUsedError;
