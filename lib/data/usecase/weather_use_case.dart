@@ -19,11 +19,12 @@ class WeatherUseCase {
   final WeatherRepository repository;
   final Ref ref;
 
-  void startLoading() => ref
-      .read(weatherPageUiStateProvider.notifier)
-      .update((state) => const WeatherPageUiState.loading());
-
   Future<void> fetchWeather(WeatherForecastTarget target) async {
+    // startLoading
+    ref
+        .read(weatherPageUiStateProvider.notifier)
+        .update((state) => const WeatherPageUiState.loading());
+
     final result = await repository.getWeather(target);
 
     // ignore: cascade_invocations

@@ -98,6 +98,10 @@ void main() {
         ),
         weatherPageUiStateListener(
           const WeatherPageUiState.initial(),
+          const WeatherPageUiState.loading(),
+        ),
+        weatherPageUiStateListener(
+          const WeatherPageUiState.loading(),
           const WeatherPageUiState.success(),
         ),
       ]);
@@ -168,12 +172,16 @@ void main() {
       const WeatherPageUiState.failure(ErrorMessage.invalidParameter),
     );
 
-    verify(
+    verifyInOrder([
       weatherPageUiStateListener(
         const WeatherPageUiState.initial(),
+        const WeatherPageUiState.loading(),
+      ),
+      weatherPageUiStateListener(
+        const WeatherPageUiState.loading(),
         const WeatherPageUiState.failure(ErrorMessage.invalidParameter),
       ),
-    ).called(1);
+    ]);
     verifyNoMoreInteractions(weatherPageUiStateListener);
 
     verify(
@@ -246,12 +254,16 @@ void main() {
       const WeatherPageUiState.failure(ErrorMessage.unknown),
     );
 
-    verify(
+    verifyInOrder([
       weatherPageUiStateListener(
         const WeatherPageUiState.initial(),
+        const WeatherPageUiState.loading(),
+      ),
+      weatherPageUiStateListener(
+        const WeatherPageUiState.loading(),
         const WeatherPageUiState.failure(ErrorMessage.unknown),
       ),
-    ).called(1);
+    ]);
     verifyNoMoreInteractions(weatherPageUiStateListener);
 
     verify(
@@ -324,12 +336,14 @@ void main() {
       const WeatherPageUiState.failure(ErrorMessage.other),
     );
 
-    verify(
+    verifyInOrder([
+      weatherPageUiStateListener(const WeatherPageUiState.initial(),
+          const WeatherPageUiState.loading()),
       weatherPageUiStateListener(
-        const WeatherPageUiState.initial(),
+        const WeatherPageUiState.loading(),
         const WeatherPageUiState.failure(ErrorMessage.other),
       ),
-    ).called(1);
+    ]);
     verifyNoMoreInteractions(weatherPageUiStateListener);
 
     verify(weatherInfoListener(null, null)).called(1);

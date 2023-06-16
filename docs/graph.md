@@ -24,7 +24,6 @@ flowchart TB
   WeatherPage((WeatherPage));
   weatherPageUiStateProvider --> WeatherPage;
   weatherUseCaseProvider -.-> WeatherPage;
-  weatherUseCaseProvider -.-> WeatherPage;
   weatherInfoStateProvider[[weatherInfoStateProvider]];
   weatherPageUiStateProvider[[weatherPageUiStateProvider]];
   weatherUseCaseProvider[[weatherUseCaseProvider]];
