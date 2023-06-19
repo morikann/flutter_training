@@ -337,8 +337,10 @@ void main() {
     );
 
     verifyInOrder([
-      weatherPageUiStateListener(const WeatherPageUiState.initial(),
-          const WeatherPageUiState.loading()),
+      weatherPageUiStateListener(
+        const WeatherPageUiState.initial(),
+        const WeatherPageUiState.loading(),
+      ),
       weatherPageUiStateListener(
         const WeatherPageUiState.loading(),
         const WeatherPageUiState.failure(ErrorMessage.other),
