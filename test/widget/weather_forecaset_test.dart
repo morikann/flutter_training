@@ -8,11 +8,11 @@ import 'package:flutter_training/view/weather/component/weather_forecast.dart';
 import 'utils/device_size.dart';
 
 void main() {
-  setUp(setUpDeviceSize);
-  tearDown(tearDownDeviceSize);
-
   testWidgets('If weatherInfo is null, placeholder is displayed',
       (tester) async {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
+
     await tester.pumpWidget(
       const ProviderScope(
         child: MaterialApp(
@@ -22,10 +22,16 @@ void main() {
     );
 
     expect(find.byType(Placeholder), findsOneWidget);
+
+    // teardown
+    await tearDownDeviceSize(binding);
   });
 
   testWidgets('If weatherInfo is null, two ** ℃ texts are displayed',
       (tester) async {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
+
     await tester.pumpWidget(
       const ProviderScope(
         child: MaterialApp(
@@ -35,9 +41,15 @@ void main() {
     );
 
     expect(find.text('** ℃'), findsNWidgets(2));
+
+    // teardown
+    await tearDownDeviceSize(binding);
   });
 
   testWidgets('The color of the maxTemperature is Colors.red', (tester) async {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -60,9 +72,15 @@ void main() {
 
     final textWidget = tester.firstWidget(maxTemperature) as Text;
     expect(textWidget.style!.color, Colors.red);
+
+    // teardown
+    await tearDownDeviceSize(binding);
   });
 
   testWidgets('The color of the minTemperature is Colors.blue', (tester) async {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -85,5 +103,8 @@ void main() {
 
     final textWidget = tester.firstWidget(maxTemperature) as Text;
     expect(textWidget.style!.color, Colors.blue);
+
+    // teardown
+    await tearDownDeviceSize(binding);
   });
 }

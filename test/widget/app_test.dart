@@ -7,13 +7,13 @@ import 'package:flutter_training/view/weather/weather_page.dart';
 import 'utils/device_size.dart';
 
 void main() {
-  setUp(setUpDeviceSize);
-  tearDown(tearDownDeviceSize);
-
   testWidgets('''
       Transition from LaunchPage to WeatherPage 
       after 500ms of application launch
     ''', (tester) async {
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
+    await setUpDeviceSize(binding);
+
     await tester.pumpWidget(
       const ProviderScope(
         child: App(),
@@ -27,5 +27,8 @@ void main() {
 
     expect(find.byType(WeatherPage), findsOneWidget);
     expect(find.byType(LaunchPage), findsNothing);
+
+    // teardown
+    await tearDownDeviceSize(binding);
   });
 }

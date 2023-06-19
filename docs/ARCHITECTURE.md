@@ -105,12 +105,13 @@ flowchart TB
   weatherInfoStateProvider ==> WeatherForecast;
   WeatherPage((WeatherPage));
   weatherPageUiStateProvider --> WeatherPage;
-  fetchWeatherUseCaseProvider -.-> WeatherPage;
+  weatherUseCaseProvider -.-> WeatherPage;
+  weatherUseCaseProvider -.-> WeatherPage;
+  weatherInfoStateProvider[[weatherInfoStateProvider]];
+  weatherPageUiStateProvider[[weatherPageUiStateProvider]];
+  weatherUseCaseProvider[[weatherUseCaseProvider]];
+  weatherRepositoryProvider ==> weatherUseCaseProvider;
   weatherRepositoryProvider[[weatherRepositoryProvider]];
   weatherDatastoreProvider ==> weatherRepositoryProvider;
   weatherDatastoreProvider[[weatherDatastoreProvider]];
-  weatherInfoStateProvider[[weatherInfoStateProvider]];
-  weatherPageUiStateProvider[[weatherPageUiStateProvider]];
-  fetchWeatherUseCaseProvider[[fetchWeatherUseCaseProvider]];
-  weatherRepositoryProvider ==> fetchWeatherUseCaseProvider;
 ```

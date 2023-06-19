@@ -5,7 +5,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
-import 'weather_datasotore_test.mocks.dart';
+import 'weather_datastore_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<YumemiWeather>()])
 void main() {
@@ -17,7 +17,7 @@ void main() {
     date: DateTime(2023, 4, 19),
   );
 
-  test('getWeather returns valid weather data successfully', () {
+  test('getWeather returns valid weather data successfully', () async {
     // Arrange
     const weatherJson = '''
         {
@@ -28,10 +28,10 @@ void main() {
         }
         ''';
 
-    when(mockYumemiWeather.fetchWeather(any)).thenReturn(weatherJson);
+    when(mockYumemiWeather.syncFetchWeather(any)).thenReturn(weatherJson);
 
     // Act
-    final weatherData = weatherDatastore.getWeather(target);
+    final weatherData = await weatherDatastore.getWeather(target);
 
     // Assert
     expect(weatherData['weather_condition'], 'cloudy');
@@ -45,7 +45,7 @@ void main() {
           when fetchWeather throws invalidParameter error
         ''', () {
     // Arrange
-    when(mockYumemiWeather.fetchWeather(any))
+    when(mockYumemiWeather.syncFetchWeather(any))
         .thenThrow(YumemiWeatherError.invalidParameter);
 
     // Act, Assert
@@ -60,7 +60,7 @@ void main() {
           when fetchWeather throws unknown error
         ''', () {
     // Arrange
-    when(mockYumemiWeather.fetchWeather(any))
+    when(mockYumemiWeather.syncFetchWeather(any))
         .thenThrow(YumemiWeatherError.unknown);
 
     // Act, Assert

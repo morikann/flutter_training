@@ -6,13 +6,13 @@ import 'package:flutter_training/data/model/weather/weather_condition.dart';
 import 'package:flutter_training/data/model/weather/weather_forecast_target.dart';
 import 'package:flutter_training/data/model/weather/weather_info.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
-import 'package:flutter_training/data/usecase/fetch_weather_use_case.dart';
+import 'package:flutter_training/data/usecase/weather_use_case.dart';
 import 'package:flutter_training/view/weather/component/weather_forecast.dart';
 import 'package:flutter_training/view/weather/weather_page_ui_state.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'fetch_weather_use_case_test.mocks.dart';
+import 'weather_use_case_test.mocks.dart';
 
 // プロバイダによるListenerへの通知を追跡する
 class Listener<T> extends Mock {
@@ -33,21 +33,21 @@ void main() {
         When weatherInfo is successfully returned from Repository,
         update state of weatherInfoStateProvider
       ''',
-    () {
+    () async {
       // Arrange
       const weatherInfo = WeatherInfo(
         weatherCondition: WeatherCondition.sunny,
         maxTemperature: 20,
         minTemperature: 10,
       );
-      when(mockRepository.getWeather(any)).thenReturn(
-        const Result.success(weatherInfo),
+      when(mockRepository.getWeather(any)).thenAnswer(
+        (_) async => const Result.success(weatherInfo),
       );
 
       final container = ProviderContainer(
         overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(mockRepository, ref),
+          weatherUseCaseProvider.overrideWith(
+            (ref) => WeatherUseCase(mockRepository, ref),
           ),
         ],
       );
@@ -79,7 +79,7 @@ void main() {
       );
 
       // Act
-      container.read(fetchWeatherUseCaseProvider).fetchWeather(
+      await container.read(weatherUseCaseProvider).fetchWeather(
             WeatherForecastTarget(
               area: 'Tokyo',
               date: DateTime.now(),
@@ -91,12 +91,20 @@ void main() {
       verify(weatherInfoListener(null, weatherInfo)).called(1);
       verifyNoMoreInteractions(weatherInfoListener);
 
-      verify(
+      verifyInOrder([
         weatherPageUiStateListener(
           null,
           const WeatherPageUiState.initial(),
         ),
-      ).called(1);
+        weatherPageUiStateListener(
+          const WeatherPageUiState.initial(),
+          const WeatherPageUiState.loading(),
+        ),
+        weatherPageUiStateListener(
+          const WeatherPageUiState.loading(),
+          const WeatherPageUiState.success(),
+        ),
+      ]);
       verifyNoMoreInteractions(weatherPageUiStateListener);
     },
   );
@@ -107,17 +115,17 @@ void main() {
   test('''
       When Result.failure('パラメータが間違っています。') is returned,
       update WeatherPageUiStateProvider state with the error message received
-    ''', () {
+    ''', () async {
     // Arrange
     final mockRepository = MockWeatherRepository();
-    when(mockRepository.getWeather(any)).thenReturn(
-      const Result.failure(ErrorMessage.invalidParameter),
+    when(mockRepository.getWeather(any)).thenAnswer(
+      (_) async => const Result.failure(ErrorMessage.invalidParameter),
     );
 
     final container = ProviderContainer(
       overrides: [
-        fetchWeatherUseCaseProvider.overrideWith(
-          (ref) => FetchWeatherUseCase(mockRepository, ref),
+        weatherUseCaseProvider.overrideWith(
+          (ref) => WeatherUseCase(mockRepository, ref),
         ),
       ],
     );
@@ -151,7 +159,7 @@ void main() {
     );
 
     // Act
-    container.read(fetchWeatherUseCaseProvider).fetchWeather(
+    await container.read(weatherUseCaseProvider).fetchWeather(
           WeatherForecastTarget(
             area: 'Tokyo',
             date: DateTime.now(),
@@ -159,28 +167,21 @@ void main() {
         );
 
     // Assert
-    // WeatherPageUiStateはMutableなオブジェクトなので、オブジェクトではなく、型が等しいかテスト
     expect(
       container.read(weatherPageUiStateProvider),
-      isA<WeatherPageUiFailureState>().having(
-        (failure) => failure.errorMessage,
-        'errorMessage',
-        ErrorMessage.invalidParameter,
-      ),
+      const WeatherPageUiState.failure(ErrorMessage.invalidParameter),
     );
 
-    verify(
+    verifyInOrder([
       weatherPageUiStateListener(
         const WeatherPageUiState.initial(),
-        argThat(
-          isA<WeatherPageUiFailureState>().having(
-            (failure) => failure.errorMessage,
-            'errorMessage',
-            ErrorMessage.invalidParameter,
-          ),
-        ),
+        const WeatherPageUiState.loading(),
       ),
-    ).called(1);
+      weatherPageUiStateListener(
+        const WeatherPageUiState.loading(),
+        const WeatherPageUiState.failure(ErrorMessage.invalidParameter),
+      ),
+    ]);
     verifyNoMoreInteractions(weatherPageUiStateListener);
 
     verify(
@@ -196,17 +197,17 @@ void main() {
   test('''
       When Result.failure('予期せぬ不具合が発生しました。') is returned,
       update WeatherPageUiStateProvider state with the error message received
-    ''', () {
+    ''', () async {
     // Arrange
     final mockRepository = MockWeatherRepository();
-    when(mockRepository.getWeather(any)).thenReturn(
-      const Result.failure(ErrorMessage.unknown),
+    when(mockRepository.getWeather(any)).thenAnswer(
+      (_) async => const Result.failure(ErrorMessage.unknown),
     );
 
     final container = ProviderContainer(
       overrides: [
-        fetchWeatherUseCaseProvider.overrideWith(
-          (ref) => FetchWeatherUseCase(mockRepository, ref),
+        weatherUseCaseProvider.overrideWith(
+          (ref) => WeatherUseCase(mockRepository, ref),
         ),
       ],
     );
@@ -240,7 +241,7 @@ void main() {
     );
 
     // Act
-    container.read(fetchWeatherUseCaseProvider).fetchWeather(
+    await container.read(weatherUseCaseProvider).fetchWeather(
           WeatherForecastTarget(
             area: 'Tokyo',
             date: DateTime.now(),
@@ -250,25 +251,19 @@ void main() {
     // Assert
     expect(
       container.read(weatherPageUiStateProvider),
-      isA<WeatherPageUiFailureState>().having(
-        (failure) => failure.errorMessage,
-        'errorMessage',
-        ErrorMessage.unknown,
-      ),
+      const WeatherPageUiState.failure(ErrorMessage.unknown),
     );
 
-    verify(
+    verifyInOrder([
       weatherPageUiStateListener(
         const WeatherPageUiState.initial(),
-        argThat(
-          isA<WeatherPageUiFailureState>().having(
-            (failure) => failure.errorMessage,
-            'errorMessage',
-            ErrorMessage.unknown,
-          ),
-        ),
+        const WeatherPageUiState.loading(),
       ),
-    ).called(1);
+      weatherPageUiStateListener(
+        const WeatherPageUiState.loading(),
+        const WeatherPageUiState.failure(ErrorMessage.unknown),
+      ),
+    ]);
     verifyNoMoreInteractions(weatherPageUiStateListener);
 
     verify(
@@ -284,17 +279,17 @@ void main() {
   test('''
       When Result.failure('例外が発生しました。') is returned,
       update WeatherPageUiStateProvider state with the error message received
-    ''', () {
+    ''', () async {
     // Arrange
     final mockRepository = MockWeatherRepository();
-    when(mockRepository.getWeather(any)).thenReturn(
-      const Result.failure(ErrorMessage.other),
+    when(mockRepository.getWeather(any)).thenAnswer(
+      (_) async => const Result.failure(ErrorMessage.other),
     );
 
     final container = ProviderContainer(
       overrides: [
-        fetchWeatherUseCaseProvider.overrideWith(
-          (ref) => FetchWeatherUseCase(mockRepository, ref),
+        weatherUseCaseProvider.overrideWith(
+          (ref) => WeatherUseCase(mockRepository, ref),
         ),
       ],
     );
@@ -328,7 +323,7 @@ void main() {
     );
 
     // Act
-    container.read(fetchWeatherUseCaseProvider).fetchWeather(
+    await container.read(weatherUseCaseProvider).fetchWeather(
           WeatherForecastTarget(
             area: 'Tokyo',
             date: DateTime.now(),
@@ -338,25 +333,19 @@ void main() {
     // Assert
     expect(
       container.read(weatherPageUiStateProvider),
-      isA<WeatherPageUiFailureState>().having(
-        (failure) => failure.errorMessage,
-        'errorMessage',
-        ErrorMessage.other,
-      ),
+      const WeatherPageUiState.failure(ErrorMessage.other),
     );
 
-    verify(
+    verifyInOrder([
       weatherPageUiStateListener(
         const WeatherPageUiState.initial(),
-        argThat(
-          isA<WeatherPageUiFailureState>().having(
-            (failure) => failure.errorMessage,
-            'errorMessage',
-            ErrorMessage.other,
-          ),
-        ),
+        const WeatherPageUiState.loading(),
       ),
-    ).called(1);
+      weatherPageUiStateListener(
+        const WeatherPageUiState.loading(),
+        const WeatherPageUiState.failure(ErrorMessage.other),
+      ),
+    ]);
     verifyNoMoreInteractions(weatherPageUiStateListener);
 
     verify(weatherInfoListener(null, null)).called(1);

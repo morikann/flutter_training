@@ -18,9 +18,11 @@ class WeatherRepository {
   const WeatherRepository(this.datastore);
   final WeatherDatastore datastore;
 
-  Result<WeatherInfo, String> getWeather(WeatherForecastTarget target) {
+  Future<Result<WeatherInfo, String>> getWeather(
+    WeatherForecastTarget target,
+  ) async {
     try {
-      final weatherData = datastore.getWeather(target);
+      final weatherData = await datastore.getWeather(target);
       final weatherInfo = WeatherInfo.fromJson(weatherData);
       return Result.success(weatherInfo);
     } on YumemiWeatherError catch (e) {

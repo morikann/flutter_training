@@ -3,9 +3,11 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i4;
+
 import 'package:flutter_training/data/datastore/weather_datastore.dart' as _i3;
 import 'package:flutter_training/data/model/weather/weather_forecast_target.dart'
-    as _i4;
+    as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:yumemi_weather/yumemi_weather.dart' as _i2;
 
@@ -47,17 +49,20 @@ class MockWeatherDatastore extends _i1.Mock implements _i3.WeatherDatastore {
         ),
       ) as _i2.YumemiWeather);
   @override
-  Map<String, dynamic> getWeather(_i4.WeatherForecastTarget? target) =>
+  _i4.Future<Map<String, dynamic>> getWeather(
+          _i5.WeatherForecastTarget? target) =>
       (super.noSuchMethod(
         Invocation.method(
           #getWeather,
           [target],
         ),
-        returnValue: <String, dynamic>{},
-        returnValueForMissingStub: <String, dynamic>{},
-      ) as Map<String, dynamic>);
+        returnValue:
+            _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+        returnValueForMissingStub:
+            _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i4.Future<Map<String, dynamic>>);
   @override
-  String toJson(_i4.WeatherForecastTarget? target) => (super.noSuchMethod(
+  String toJson(_i5.WeatherForecastTarget? target) => (super.noSuchMethod(
         Invocation.method(
           #toJson,
           [target],

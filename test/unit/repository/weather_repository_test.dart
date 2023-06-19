@@ -15,8 +15,8 @@ import 'weather_repository_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<WeatherDatastore>()])
 void main() {
   // Arrange
-  final weatherDatasotre = MockWeatherDatastore();
-  final weatherRepository = WeatherRepository(weatherDatasotre);
+  final weatherDatastore = MockWeatherDatastore();
+  final weatherRepository = WeatherRepository(weatherDatastore);
   final target = WeatherForecastTarget(
     area: 'Tokyo',
     date: DateTime(2023, 4, 19),
@@ -27,17 +27,19 @@ void main() {
   test('''
         When WeatherDatastore returns Map,
         returns Result<WeatherInfo, String>.success 
-      ''', () {
+      ''', () async {
     // Arrange
-    when(weatherDatasotre.getWeather(any)).thenReturn({
-      'weather_condition': 'cloudy',
-      'max_temperature': 25,
-      'min_temperature': 7,
-      'date': '2023-04-19T00:00:00.000',
+    when(weatherDatastore.getWeather(any)).thenAnswer((_) async {
+      return {
+        'weather_condition': 'cloudy',
+        'max_temperature': 25,
+        'min_temperature': 7,
+        'date': '2023-04-19T00:00:00.000',
+      };
     });
 
     // Act
-    final result = weatherRepository.getWeather(target);
+    final result = await weatherRepository.getWeather(target);
 
     // Assert
     expect(
@@ -58,13 +60,13 @@ void main() {
   test('''
       When WeatherDatastore throws YumemiWeatherError.invalidParameter,
       returns Result<WeatherInfo, String>.failure
-    ''', () {
+    ''', () async {
     // Arrange
-    when(weatherDatasotre.getWeather(any))
+    when(weatherDatastore.getWeather(any))
         .thenThrow(YumemiWeatherError.invalidParameter);
 
     // Act
-    final result = weatherRepository.getWeather(target);
+    final result = await weatherRepository.getWeather(target);
 
     // Assert
     expect(
@@ -76,18 +78,18 @@ void main() {
   });
 
   // 失敗ケース2
-  // datasotreがYumemiWeatherError.unknownを投げる時
+  // datastoreがYumemiWeatherError.unknownを投げる時
   // Result<String>('予期せぬ不具合が発生しました。')を返す
   test('''
       When WeatherDatastore throws YumemiWeatherError.unknown,
       returns Result<WeatherInfo, String>.failure
-    ''', () {
+    ''', () async {
     // Arrange
-    when(weatherDatasotre.getWeather(any))
+    when(weatherDatastore.getWeather(any))
         .thenThrow(YumemiWeatherError.unknown);
 
     // Act
-    final result = weatherRepository.getWeather(target);
+    final result = await weatherRepository.getWeather(target);
 
     // Assert
     expect(
@@ -104,12 +106,12 @@ void main() {
   test('''
       When WeatherDatastore throws Exception,
       returns Result<WeatherInfo, String>.failure
-    ''', () {
+    ''', () async {
     // Arrange
-    when(weatherDatasotre.getWeather(any)).thenThrow(Exception());
+    when(weatherDatastore.getWeather(any)).thenThrow(Exception());
 
     // Act
-    final result = weatherRepository.getWeather(target);
+    final result = await weatherRepository.getWeather(target);
 
     // Assert
     expect(
